@@ -1,0 +1,78 @@
+
+<div>
+    <h2><span translate="hillcresttooldieApp.part.detail.title">Part</span> {{part.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.part.part_number">Part_number</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{part.part_number}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.part.plasma_hrs_per_part">Plasma_hrs_per_part</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{part.plasma_hrs_per_part}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.part.grind_hrs_per_part">Grind_hrs_per_part</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{part.grind_hrs_per_part}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.part.mill_hrs_per_part">Mill_hrs_per_part</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{part.mill_hrs_per_part}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.part.brakepress_hrs_per_part">Brakepress_hrs_per_part</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{part.brakepress_hrs_per_part}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.part.lb_per_part">Lb_per_part</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{part.lb_per_part}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.part.inventory_count">Inventory_count</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{part.inventory_count}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="part"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

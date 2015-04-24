@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity Po.
+    -->
+    <changeSet id="20150423020427" author="jhipster">
+        <createTable tableName="T_PO">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="po_number" type="varchar(255)"/>
+            <column name="sales_order_number" type="varchar(255)"/>
+            <column name="due_date" type="date"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="total_sale" type="decimal(10,2)"/>
+        </createTable>
+        
+        <createTable tableName="T_PO_PART">
+            <column name="parts_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pos_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="pos_id, parts_id" tableName="T_PO_PART"/>
+
+        <addForeignKeyConstraint baseColumnNames="pos_id"
+                                 baseTableName="T_PO_PART"
+                                 constraintName="fk_po_part_part_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_PO"/>
+
+        <addForeignKeyConstraint baseColumnNames="parts_id"
+                                 baseTableName="T_PO_PART"
+                                 constraintName="fk_part_part_po_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_PART"/>
+        
+        <createTable tableName="T_PO_CUSTOMER">
+            <column name="customers_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pos_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="pos_id, customers_id" tableName="T_PO_CUSTOMER"/>
+
+        <addForeignKeyConstraint baseColumnNames="pos_id"
+                                 baseTableName="T_PO_CUSTOMER"
+                                 constraintName="fk_po_customer_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_PO"/>
+
+        <addForeignKeyConstraint baseColumnNames="customers_id"
+                                 baseTableName="T_PO_CUSTOMER"
+                                 constraintName="fk_customer_customer_po_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CUSTOMER"/>
+        
+    </changeSet>
+</databaseChangeLog>

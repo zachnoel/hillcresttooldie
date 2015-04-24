@@ -1,0 +1,10 @@
+{
+    "main": {
+        "title": "Welcome to Hillcrest Tool and Die",
+        "subtitle": "This is your homepage",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\"."
+        }
+        
+    }
+}

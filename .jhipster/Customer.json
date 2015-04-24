@@ -1,0 +1,42 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "customer_name",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Customer_name",
+            "fieldNameUnderscored": "customer_name",
+            "fieldInJavaBeanMethod": "Customer_name",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "customer_address",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Customer_address",
+            "fieldNameUnderscored": "customer_address",
+            "fieldInJavaBeanMethod": "Customer_address",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "customer_phone",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Customer_phone",
+            "fieldNameUnderscored": "customer_phone",
+            "fieldInJavaBeanMethod": "Customer_phone",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150423020207",
+    "pagination": "pager",
+    "validation": false
+}

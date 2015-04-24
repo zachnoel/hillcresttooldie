@@ -1,0 +1,90 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "material",
+            "relationshipNameCapitalized": "Material",
+            "relationshipFieldName": "material",
+            "otherEntityName": "material",
+            "relationshipType": "many-to-many",
+            "otherEntityNameCapitalized": "Material",
+            "otherEntityField": "material_number",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "part_number",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Part_number",
+            "fieldNameUnderscored": "part_number",
+            "fieldInJavaBeanMethod": "Part_number",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "plasma_hrs_per_part",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Plasma_hrs_per_part",
+            "fieldNameUnderscored": "plasma_hrs_per_part",
+            "fieldInJavaBeanMethod": "Plasma_hrs_per_part",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "grind_hrs_per_part",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Grind_hrs_per_part",
+            "fieldNameUnderscored": "grind_hrs_per_part",
+            "fieldInJavaBeanMethod": "Grind_hrs_per_part",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "mill_hrs_per_part",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Mill_hrs_per_part",
+            "fieldNameUnderscored": "mill_hrs_per_part",
+            "fieldInJavaBeanMethod": "Mill_hrs_per_part",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "brakepress_hrs_per_part",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Brakepress_hrs_per_part",
+            "fieldNameUnderscored": "brakepress_hrs_per_part",
+            "fieldInJavaBeanMethod": "Brakepress_hrs_per_part",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "lb_per_part",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Lb_per_part",
+            "fieldNameUnderscored": "lb_per_part",
+            "fieldInJavaBeanMethod": "Lb_per_part",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "inventory_count",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Inventory_count",
+            "fieldNameUnderscored": "inventory_count",
+            "fieldInJavaBeanMethod": "Inventory_count",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": true,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150423015823",
+    "pagination": "pager",
+    "validation": false
+}

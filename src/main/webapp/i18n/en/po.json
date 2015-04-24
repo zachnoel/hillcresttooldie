@@ -1,0 +1,24 @@
+{
+    "hillcresttooldieApp": {
+        "po" : {
+            "home": {
+                "title": "Purchase Orders",
+                "createLabel": "Create a new Purchase Order",
+                "createOrEditLabel": "Create or edit a Purchase Order"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Purchase Order {{ id }}?"
+            },
+            "detail": {
+                "title": "Purchase Order"
+            },
+            "po_number": "PO Number",
+            "sales_order_number": "Sales Order Number",
+            "due_date": "Due Date",
+            "status": "Status",
+            "total_sale": "Total Sale",
+            "part": "Part",
+            "customer": "Customer"
+        }
+    }
+}

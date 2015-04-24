@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span translate="hillcresttooldieApp.customer.detail.title">Customer</span> {{customer.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.customer.customer_name">Customer_name</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{customer.customer_name}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.customer.customer_address">Customer_address</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{customer.customer_address}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.customer.customer_phone">Customer_phone</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{customer.customer_phone}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="customer"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

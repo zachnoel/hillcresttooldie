@@ -1,0 +1,62 @@
+
+<div>
+    <h2><span translate="hillcresttooldieApp.po.detail.title">Po</span> {{po.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.po.po_number">Po_number</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{po.po_number}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.po.sales_order_number">Sales_order_number</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{po.sales_order_number}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.po.due_date">Due_date</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{po.due_date}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.po.status">Status</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{po.status}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.po.total_sale">Total_sale</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{po.total_sale}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="po"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

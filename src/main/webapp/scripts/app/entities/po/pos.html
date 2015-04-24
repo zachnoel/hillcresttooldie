@@ -1,0 +1,156 @@
+<div>
+
+    <h2 translate="hillcresttooldieApp.po.home.title">Po</h2>
+
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#savePoModal" ng-click="clear()">
+        <span class="glyphicon glyphicon-flash"></span> <span translate="hillcresttooldieApp.po.home.createLabel">Create a new Po</span>
+    </button>
+    <div class="modal fade" id="savePoModal" tabindex="-1" role="dialog" aria-labelledby="myPoLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="create()">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myPoLabel" translate="hillcresttooldieApp.po.home.createOrEditLabel">Create or edit a Po</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="po.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.po_number">Po_number</label>
+                            <input type="text" class="form-control" name="po_number"
+                                   ng-model="po.po_number">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.sales_order_number">Sales_order_number</label>
+                            <input type="text" class="form-control" name="sales_order_number"
+                                   ng-model="po.sales_order_number">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.due_date">Due_date</label>
+                            <input type="date" class="form-control" name="due_date"
+                                   ng-model="po.due_date">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.status">Status</label>
+                            <input type="text" class="form-control" name="status"
+                                   ng-model="po.status">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.total_sale">Total_sale</label>
+                            <input type="number" class="form-control" name="total_sale"
+                                   ng-model="po.total_sale">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.part">part</label>
+                            <select class="form-control" multiple name="part" ng-model="po.parts" ng-options="part as part.part_number for part in parts track by part.id">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.customer">customer</label>
+                            <select class="form-control" multiple name="customer" ng-model="po.customers" ng-options="customer as customer.customer_name for customer in customers track by customer.id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deletePoConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(po.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="hillcresttooldieApp.po.delete.question" translate-values="{id: '{{po.id}}'}">Are you sure you want to delete this Po?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="hillcresttooldieApp.po.po_number">Po_number</th>
+                    <th translate="hillcresttooldieApp.po.sales_order_number">Sales_order_number</th>
+                    <th translate="hillcresttooldieApp.po.due_date">Due_date</th>
+                    <th translate="hillcresttooldieApp.po.status">Status</th>
+                    <th translate="hillcresttooldieApp.po.total_sale">Total_sale</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="po in pos">
+                    <td><a ui-sref="poDetail({id:po.id})">{{po.id}}</a></td>
+                    <td>{{po.po_number}}</td>
+                    <td>{{po.sales_order_number}}</td>
+                    <td>{{po.due_date}}</td>
+                    <td>{{po.status}}</td>
+                    <td>{{po.total_sale}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="poDetail({id:po.id})"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="update(po.id)"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(po.id)"
+                                class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pager">
+                <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a></li>
+                <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li>
+                <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li>
+                <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a href="#">&gt;&gt;</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

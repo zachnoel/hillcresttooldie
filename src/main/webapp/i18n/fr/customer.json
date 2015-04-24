@@ -1,0 +1,21 @@
+{
+    "hillcresttooldieApp": {
+        "customer" : {
+            "home": {
+                "title": "Customers",
+                "createLabel": "Créer un nouveau Customer",
+                "createOrEditLabel": "Créer ou éditer un Customer"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Customer {{ id }} ?"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "customer_name": "Customer_name",
+            "customer_address": "Customer_address",
+            "customer_phone": "Customer_phone"
+        }
+    }
+}
+

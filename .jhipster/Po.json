@@ -1,0 +1,83 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "part",
+            "relationshipNameCapitalized": "Part",
+            "relationshipFieldName": "part",
+            "otherEntityName": "part",
+            "relationshipType": "many-to-many",
+            "otherEntityNameCapitalized": "Part",
+            "otherEntityField": "part_number",
+            "ownerSide": true
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "customer",
+            "relationshipNameCapitalized": "Customer",
+            "relationshipFieldName": "customer",
+            "otherEntityName": "customer",
+            "relationshipType": "many-to-many",
+            "otherEntityNameCapitalized": "Customer",
+            "otherEntityField": "customer_name",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "po_number",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Po_number",
+            "fieldNameUnderscored": "po_number",
+            "fieldInJavaBeanMethod": "Po_number",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "sales_order_number",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Sales_order_number",
+            "fieldNameUnderscored": "sales_order_number",
+            "fieldInJavaBeanMethod": "Sales_order_number",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "due_date",
+            "fieldType": "LocalDate",
+            "fieldNameCapitalized": "Due_date",
+            "fieldNameUnderscored": "due_date",
+            "fieldInJavaBeanMethod": "Due_date",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "status",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Status",
+            "fieldNameUnderscored": "status",
+            "fieldInJavaBeanMethod": "Status",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "total_sale",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Total_sale",
+            "fieldNameUnderscored": "total_sale",
+            "fieldInJavaBeanMethod": "Total_sale",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": true,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": true,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150423020427",
+    "pagination": "pager",
+    "validation": false
+}

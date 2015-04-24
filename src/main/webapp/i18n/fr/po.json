@@ -1,0 +1,25 @@
+{
+    "hillcresttooldieApp": {
+        "po" : {
+            "home": {
+                "title": "Pos",
+                "createLabel": "Créer un nouveau Po",
+                "createOrEditLabel": "Créer ou éditer un Po"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Po {{ id }} ?"
+            },
+            "detail": {
+                "title": "Po"
+            },
+            "po_number": "Po_number",
+            "sales_order_number": "Sales_order_number",
+            "due_date": "Due_date",
+            "status": "Status",
+            "total_sale": "Total_sale",
+            "part": "part",
+            "customer": "customer"
+        }
+    }
+}
+

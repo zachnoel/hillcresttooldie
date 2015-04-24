@@ -1,0 +1,24 @@
+{
+    "hillcresttooldieApp": {
+        "material" : {
+            "home": {
+                "title": "Materials",
+                "createLabel": "Créer un nouveau Material",
+                "createOrEditLabel": "Créer ou éditer un Material"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Material {{ id }} ?"
+            },
+            "detail": {
+                "title": "Material"
+            },
+            "material_number": "Material_number",
+            "material_thickness": "Material_thickness",
+            "material_size": "Material_size",
+            "lb_per_sheet": "Lb_per_sheet",
+            "dollar_per_lb": "Dollar_per_lb",
+            "inventory_count": "Inventory_count"
+        }
+    }
+}
+

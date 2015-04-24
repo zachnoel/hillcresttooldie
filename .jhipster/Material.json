@@ -1,0 +1,69 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "material_number",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Material_number",
+            "fieldNameUnderscored": "material_number",
+            "fieldInJavaBeanMethod": "Material_number",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "material_thickness",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Material_thickness",
+            "fieldNameUnderscored": "material_thickness",
+            "fieldInJavaBeanMethod": "Material_thickness",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "material_size",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Material_size",
+            "fieldNameUnderscored": "material_size",
+            "fieldInJavaBeanMethod": "Material_size",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "lb_per_sheet",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Lb_per_sheet",
+            "fieldNameUnderscored": "lb_per_sheet",
+            "fieldInJavaBeanMethod": "Lb_per_sheet",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "dollar_per_lb",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Dollar_per_lb",
+            "fieldNameUnderscored": "dollar_per_lb",
+            "fieldInJavaBeanMethod": "Dollar_per_lb",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "inventory_count",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Inventory_count",
+            "fieldNameUnderscored": "inventory_count",
+            "fieldInJavaBeanMethod": "Inventory_count",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150423015454",
+    "pagination": "pager",
+    "validation": false
+}

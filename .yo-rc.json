@@ -1,0 +1,19 @@
+{
+  "generator-jhipster": {
+    "baseName": "hillcrestToolDie",
+    "packageName": "com.htd",
+    "packageFolder": "com/htd",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "useCompass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "javaVersion": "8",
+    "rememberMeKey": "a0e5930defb0ce119de04bd716cddb49b9053ed7"
+  }
+}

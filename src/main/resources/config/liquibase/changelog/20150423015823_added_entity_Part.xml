@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity Part.
+    -->
+    <changeSet id="20150423015823" author="jhipster">
+        <createTable tableName="T_PART">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="part_number" type="varchar(255)"/>
+            <column name="plasma_hrs_per_part" type="decimal(10,2)"/>
+            <column name="grind_hrs_per_part" type="decimal(10,2)"/>
+            <column name="mill_hrs_per_part" type="decimal(10,2)"/>
+            <column name="brakepress_hrs_per_part" type="decimal(10,2)"/>
+            <column name="lb_per_part" type="decimal(10,2)"/>
+            <column name="inventory_count" type="integer"/>
+        </createTable>
+        
+        <createTable tableName="T_PART_MATERIAL">
+            <column name="materials_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parts_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="parts_id, materials_id" tableName="T_PART_MATERIAL"/>
+
+        <addForeignKeyConstraint baseColumnNames="parts_id"
+                                 baseTableName="T_PART_MATERIAL"
+                                 constraintName="fk_part_material_material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_PART"/>
+
+        <addForeignKeyConstraint baseColumnNames="materials_id"
+                                 baseTableName="T_PART_MATERIAL"
+                                 constraintName="fk_material_material_part_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_MATERIAL"/>
+        
+    </changeSet>
+</databaseChangeLog>

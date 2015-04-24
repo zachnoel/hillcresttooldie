@@ -1,0 +1,167 @@
+<div>
+
+    <h2 translate="hillcresttooldieApp.part.home.title">Part</h2>
+
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#savePartModal" ng-click="clear()">
+        <span class="glyphicon glyphicon-flash"></span> <span translate="hillcresttooldieApp.part.home.createLabel">Create a new Part</span>
+    </button>
+    <div class="modal fade" id="savePartModal" tabindex="-1" role="dialog" aria-labelledby="myPartLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="create()">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myPartLabel" translate="hillcresttooldieApp.part.home.createOrEditLabel">Create or edit a Part</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="part.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.part_number">Part_number</label>
+                            <input type="text" class="form-control" name="part_number"
+                                   ng-model="part.part_number">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.plasma_hrs_per_part">Plasma_hrs_per_part</label>
+                            <input type="number" class="form-control" name="plasma_hrs_per_part"
+                                   ng-model="part.plasma_hrs_per_part">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.grind_hrs_per_part">Grind_hrs_per_part</label>
+                            <input type="number" class="form-control" name="grind_hrs_per_part"
+                                   ng-model="part.grind_hrs_per_part">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.mill_hrs_per_part">Mill_hrs_per_part</label>
+                            <input type="number" class="form-control" name="mill_hrs_per_part"
+                                   ng-model="part.mill_hrs_per_part">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.brakepress_hrs_per_part">Brakepress_hrs_per_part</label>
+                            <input type="number" class="form-control" name="brakepress_hrs_per_part"
+                                   ng-model="part.brakepress_hrs_per_part">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.lb_per_part">Lb_per_part</label>
+                            <input type="number" class="form-control" name="lb_per_part"
+                                   ng-model="part.lb_per_part">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.inventory_count">Inventory_count</label>
+                            <input type="number" class="form-control" name="inventory_count"
+                                   ng-model="part.inventory_count">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.material">material</label>
+                            <select class="form-control" multiple name="material" ng-model="part.materials" ng-options="material as material.material_number for material in materials track by material.id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deletePartConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(part.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="hillcresttooldieApp.part.delete.question" translate-values="{id: '{{part.id}}'}">Are you sure you want to delete this Part?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="hillcresttooldieApp.part.part_number">Part_number</th>
+                    <th translate="hillcresttooldieApp.part.plasma_hrs_per_part">Plasma_hrs_per_part</th>
+                    <th translate="hillcresttooldieApp.part.grind_hrs_per_part">Grind_hrs_per_part</th>
+                    <th translate="hillcresttooldieApp.part.mill_hrs_per_part">Mill_hrs_per_part</th>
+                    <th translate="hillcresttooldieApp.part.brakepress_hrs_per_part">Brakepress_hrs_per_part</th>
+                    <th translate="hillcresttooldieApp.part.lb_per_part">Lb_per_part</th>
+                    <th translate="hillcresttooldieApp.part.inventory_count">Inventory_count</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="part in parts">
+                    <td><a ui-sref="partDetail({id:part.id})">{{part.id}}</a></td>
+                    <td>{{part.part_number}}</td>
+                    <td>{{part.plasma_hrs_per_part}}</td>
+                    <td>{{part.grind_hrs_per_part}}</td>
+                    <td>{{part.mill_hrs_per_part}}</td>
+                    <td>{{part.brakepress_hrs_per_part}}</td>
+                    <td>{{part.lb_per_part}}</td>
+                    <td>{{part.inventory_count}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="partDetail({id:part.id})"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="update(part.id)"
+                                class="btn btn-primary">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(part.id)"
+                                class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pager">
+                <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a></li>
+                <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li>
+                <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li>
+                <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a href="#">&gt;&gt;</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

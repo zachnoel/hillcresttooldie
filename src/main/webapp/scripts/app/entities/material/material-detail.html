@@ -1,0 +1,70 @@
+
+<div>
+    <h2><span translate="hillcresttooldieApp.material.detail.title">Material</span> {{material.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.material.material_number">Material_number</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.material_number}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.material.material_thickness">Material_thickness</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.material_thickness}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.material.material_size">Material_size</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.material_size}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.material.lb_per_sheet">Lb_per_sheet</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.lb_per_sheet}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.material.dollar_per_lb">Dollar_per_lb</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.dollar_per_lb}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.material.inventory_count">Inventory_count</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.inventory_count}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="material"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

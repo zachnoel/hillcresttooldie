@@ -1,0 +1,26 @@
+{
+    "hillcresttooldieApp": {
+        "part" : {
+            "home": {
+                "title": "Parts",
+                "createLabel": "Créer un nouveau Part",
+                "createOrEditLabel": "Créer ou éditer un Part"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Part {{ id }} ?"
+            },
+            "detail": {
+                "title": "Part"
+            },
+            "part_number": "Part_number",
+            "plasma_hrs_per_part": "Plasma_hrs_per_part",
+            "grind_hrs_per_part": "Grind_hrs_per_part",
+            "mill_hrs_per_part": "Mill_hrs_per_part",
+            "brakepress_hrs_per_part": "Brakepress_hrs_per_part",
+            "lb_per_part": "Lb_per_part",
+            "inventory_count": "Inventory_count",
+            "material": "material"
+        }
+    }
+}
+

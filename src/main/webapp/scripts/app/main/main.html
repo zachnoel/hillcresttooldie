@@ -1,0 +1,35 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-md-4">
+            <span class="mainLogo img-responsive img-rounded"></span>
+        </div>
+        <div class="col-md-8">
+            <h1 translate="main.title">translated</h1>
+            <!--<p class="lead" translate="main.subtitle">translated</p>-->
+
+            <div ng-switch="isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true"
+                     translate="main.logged.message" translate-values="{username: '{{account.login}}'}">
+                    translated
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated">
+                    translated
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register">
+                    translated
+                </div>
+            </div>
+            <br>
+            <br>
+            <h2>Getting Started Steps</h2>
+            <p class="alert alert-success">To get started login first and then setup your materials, parts, and customers. Once these tables have records in them you can 
+                proceed to create purchase orders</p>
+
+                <p class="alert alert-danger"> known issue right now on decimal place fields is that you can only enter in 2 decimals at max </p>
+
+            
+        </div>
+    </div>
+</div>
