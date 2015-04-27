@@ -81,6 +81,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .csrf()
             .ignoringAntMatchers("/websocket/**")
+            .ignoringAntMatchers("/api/fileUpload/**")
         .and()
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
@@ -111,6 +112,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
+            .antMatchers("/api/fileUpload/**").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
@@ -127,6 +129,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/protected/**").authenticated();
+            
 
     }
 

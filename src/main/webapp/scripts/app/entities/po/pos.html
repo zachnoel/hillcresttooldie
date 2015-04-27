@@ -4,7 +4,31 @@
 
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#savePoModal" ng-click="clear()">
         <span class="glyphicon glyphicon-flash"></span> <span translate="hillcresttooldieApp.po.home.createLabel">Create a new Po</span>
-    </button>
+    </button><br><br>
+
+    <form name='fileUploadForm' role="form" novalidate>
+        <div ng-show="progressVisible">
+                <div class="percent">{{progress}}%</div>
+                <div class="progress-bar">
+                    <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                </div>
+            </div><br />
+        <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />&nbsp;
+        <input type="button" ng-click="uploadFile()" value="Upload" />
+        <br>
+        <div ng-show="files.length">
+            <div ng-repeat="file in files.slice(0)">
+                <span>{{file.webkitRelativePath || file.name}}</span>
+                (<span ng-switch="file.size > 1024*1024">
+                    <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
+                    <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+                </span>)
+            </div>
+            
+        </div>
+
+</form>
+   
     <div class="modal fade" id="savePoModal" tabindex="-1" role="dialog" aria-labelledby="myPoLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -12,8 +36,7 @@
                 <form name="editForm" role="form" novalidate ng-submit="create()">
 
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                                ng-click="clear()">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="clear()">&times;</button>
                         <h4 class="modal-title" id="myPoLabel" translate="hillcresttooldieApp.po.home.createOrEditLabel">Create or edit a Po</h4>
                     </div>
                     <div class="modal-body">
@@ -107,23 +130,28 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th translate="hillcresttooldieApp.po.po_number">Po_number</th>
-                    <th translate="hillcresttooldieApp.po.sales_order_number">Sales_order_number</th>
-                    <th translate="hillcresttooldieApp.po.due_date">Due_date</th>
-                    <th translate="hillcresttooldieApp.po.status">Status</th>
-                    <th translate="hillcresttooldieApp.po.total_sale">Total_sale</th>
+                    <th></th>
+                    <th>ID<br><input size='5' type='text' ng-model='search.id'></th>
+                    <th>PO Number<br><input size='5' type='text' ng-model='search.po_number'></th>
+                    <th>Order Number<br><input size='5' type='text' ng-model='search.sales_order_number'></th>
+                    <th>Due Date<br><input size='5' type='text' ng-model='search.due_date'></th>
+                    <th>Status<br><input size='5' type='text' ng-model='search.status'></th>
+                    <th>Total Sale<br><input size='5' type='text' ng-model='search.total_sale'></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="po in pos">
+                <tr ng-repeat-start="po in pos | filter:search">
+                    <td>
+                      <button ng-if="po.expanded" ng-click="po.expanded = false">-</button>
+                      <button ng-if="!po.expanded" ng-click="po.expanded = true; expand(po.id)">+</button>
+                    </td>
                     <td><a ui-sref="poDetail({id:po.id})">{{po.id}}</a></td>
                     <td>{{po.po_number}}</td>
                     <td>{{po.sales_order_number}}</td>
                     <td>{{po.due_date}}</td>
                     <td>{{po.status}}</td>
-                    <td>{{po.total_sale}}</td>
+                    <td>{{po.total_sale | currency}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="poDetail({id:po.id})"
@@ -142,6 +170,47 @@
                         </button>
                     </td>
                 </tr>
+                <tr ng-if="po.expanded" ng-repeat-end=""> <!--start of expand section -->
+                    <td colspan='3'>
+                    <h4>Customers</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Customer Name</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="customer in customers">
+                                <td>{{customer.id}}</td>
+                                <td>{{customer.customer_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    </td>
+                    <td></td>
+                    <td colspan='3'>
+                    <h4>Parts</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td class='bold'>ID</td>
+                                <td class='bold'>Part Number</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="part in parts">
+                                <td>{{part.id}}</td>
+                                <td>{{part.part_number}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    </td>
+                </tr> <!--end of expand section -->
             </tbody>
         </table>
         <nav>

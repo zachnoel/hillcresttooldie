@@ -13,6 +13,7 @@ angular.module('hillcresttooldieApp')
                         // After the login the language will be changed to
                         // the language selected by the user during his registration
                         $translate.use(account.langKey);
+
                         deferred.resolve(data);
                     });
                     return cb();
@@ -21,7 +22,7 @@ angular.module('hillcresttooldieApp')
                     deferred.reject(err);
                     return cb(err);
                 }.bind(this));
-
+               
                 return deferred.promise;
             },
 

@@ -31,6 +31,16 @@ public class PoResource {
     @Inject
     private PoRepository poRepository;
 
+    
+    /**
+     * GET  /pos -> get all the pos.
+     */
+    @RequestMapping(value = "/fileupload/po", method = RequestMethod.POST)
+    public void postTest(){
+            log.debug("//////////////////////////////File Uploaded, Insert Java processing of Excel Here ///////////////////////////");
+        
+    }
+
     /**
      * POST  /pos -> Create a new po.
      */

@@ -86,6 +86,7 @@ module.exports = function (grunt) {
                     src : [
                         'src/main/webapp/**/*.html',
                         'src/main/webapp/**/*.json',
+                        'src/main/webapp/app/entities/po/*.html',
                         '{.tmp/,}src/main/webapp/assets/styles/**/*.css',
                         '{.tmp/,}src/main/webapp/scripts/**/*.js',
                         'src/main/webapp/assets/images/**/*.{png,jpg,jpeg,gif,webp,svg}'

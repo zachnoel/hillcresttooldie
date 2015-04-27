@@ -4,8 +4,10 @@ angular.module('hillcresttooldieApp')
     .controller('MaterialController', function ($scope, Material, ParseLinks) {
         $scope.materials = [];
         $scope.page = 1;
+
+        
         $scope.loadAll = function() {
-            Material.query({page: $scope.page, per_page: 20}, function(result, headers) {
+            Material.query({page: $scope.page, per_page: 50}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.materials = result;
             });
@@ -53,4 +55,23 @@ angular.module('hillcresttooldieApp')
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     });
