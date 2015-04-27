@@ -64,7 +64,7 @@ angular.module('hillcresttooldieApp')
         };
 
         
-        
+      /*  
         $scope.setFiles = function(element) {
         $scope.$apply(function(scope) {
             console.log('files:', element.files);
@@ -103,8 +103,9 @@ angular.module('hillcresttooldieApp')
         })
     }
 
+
     function uploadComplete(evt) {
-        /* This event is raised when the server send back a response */
+        // This event is raised when the server send back a response 
         alert(evt.target.responseText)
     }
 
@@ -119,7 +120,7 @@ angular.module('hillcresttooldieApp')
         alert("The upload has been canceled by the user or the browser dropped the connection.")
     }
 
-
+*/
 
 
 });

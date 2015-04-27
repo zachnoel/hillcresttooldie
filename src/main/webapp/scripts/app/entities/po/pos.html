@@ -6,6 +6,7 @@
         <span class="glyphicon glyphicon-flash"></span> <span translate="hillcresttooldieApp.po.home.createLabel">Create a new Po</span>
     </button><br><br>
 
+<!--
     <form name='fileUploadForm' role="form" novalidate>
         <div ng-show="progressVisible">
                 <div class="percent">{{progress}}%</div>
@@ -13,7 +14,7 @@
                     <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
                 </div>
             </div><br />
-        <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />&nbsp;
+        <input type="file" ng-model-instant id="file" name='name' multiple onchange="angular.element(this).scope().setFiles(this)" />&nbsp;
         <input type="button" ng-click="uploadFile()" value="Upload" />
         <br>
         <div ng-show="files.length">
@@ -28,7 +29,13 @@
         </div>
 
 </form>
-   
+ -->
+    <form method="POST" enctype="multipart/form-data" action="/api/fileupload/po">
+         File to upload: <input type="file" name="file"><br />
+         File: <input type="text" name="name"><br /><br />
+         <input type="submit" value="Upload"> Press here to upload the file!
+    </form>
+
     <div class="modal fade" id="savePoModal" tabindex="-1" role="dialog" aria-labelledby="myPoLabel"
          aria-hidden="true">
         <div class="modal-dialog">
