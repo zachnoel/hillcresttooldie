@@ -6,11 +6,13 @@
         <span class="glyphicon glyphicon-flash"></span> <span translate="hillcresttooldieApp.material.home.createLabel">Create a new Material</span>
     </button>
     <br><br>
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-<!--File Upload -->
-        
-
-<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!--File upload-->
+	<form method="POST" enctype="multipart/form-data" action="/api/fileupload/material">
+         File to upload: <input type="file" name="file"><br />
+         File: <input type="text" name="name"><br /><br />
+         <input type="submit" value="Upload"> Press here to upload the file!
+    </form>
+    
     <div class="modal fade" id="saveMaterialModal" tabindex="-1" role="dialog" aria-labelledby="myMaterialLabel"
          aria-hidden="true">
         <div class="modal-dialog">
