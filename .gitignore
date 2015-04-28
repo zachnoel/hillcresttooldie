@@ -3,6 +3,7 @@
 ######################
 /src/main/webapp/dist
 /Servers
+/docs
 
 ######################
 # Node
