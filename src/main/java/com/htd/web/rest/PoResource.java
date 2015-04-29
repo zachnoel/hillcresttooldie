@@ -1,13 +1,15 @@
 package com.htd.web.rest;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,9 +19,11 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -27,7 +31,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-import com.hillcresttooldie.model.Items;
+import com.hillcresttooldie.model.POModel;
 import com.htd.domain.Po;
 import com.htd.repository.PoRepository;
 import com.htd.web.rest.util.PaginationUtil;
@@ -55,7 +58,7 @@ import com.htd.web.rest.util.PaginationUtil;
 public class PoResource {
 
     private final Logger log = LoggerFactory.getLogger(PoResource.class);
-
+    private Map<Integer,POModel> poMap = new HashMap<Integer,POModel>();
     @Inject
     private PoRepository poRepository;
 
@@ -68,7 +71,12 @@ public class PoResource {
             @RequestParam("file") MultipartFile file){
         
        
-       /* String mat = null, thick=null, size=null, lbsPerSheet=null, lbs=null;
+    	int _id, _poNumber = 0;
+    	String _salesOrder, _status;
+    	DateTime _date;
+    	double _totalSale;
+   
+    	
         try {
         	
             byte[] byteArr = file.getBytes();
@@ -83,9 +91,10 @@ public class PoResource {
             
             for (Iterator<Row> rit = sheet.rowIterator(); rit.hasNext();) {
 
-				Items items = new Items();
+				POModel po = new POModel();
 				Row row = rit.next();
 				
+				//skip header in excel file
 				if(row.getRowNum()==0){
 					continue;
 				}
@@ -96,40 +105,121 @@ public class PoResource {
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					mat = cell.getStringCellValue();
+					_id = Integer.parseInt(cell.getStringCellValue());
+					po.setId(_id);
 					
 
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					thick = cell.getStringCellValue();
+					_poNumber = Integer.parseInt(cell.getStringCellValue());
+					po.setPoNumber(_poNumber);
 					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					size = cell.getStringCellValue();
+					_salesOrder = cell.getStringCellValue();
+					
+					po.setSalesOrder(_salesOrder);
 					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					lbsPerSheet = cell.getStringCellValue();
+					//String bufferDate = cell.getStringCellValue();
+					
+					/*DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+					java.util.Date d =  cell.getDateCellValue();
+					String buy_date = df.format(d);
+					System.out.println("date is :- "+ buy_date);*/
+					
+					
+					//for some reason the date is return a string, print it out and it is in weird
+					//format. I am trying to figure out how to convert it to a date then store it
+					// as a date using Joda. The issue is apache poi, not sure what the issue is at the moment.
+					
+					switch (cell.getCellType()) {
+	                case Cell.CELL_TYPE_STRING:
+	                    System.out.println("String "+cell.getRichStringCellValue().getString());
+	                    break;
+	                case Cell.CELL_TYPE_NUMERIC:
+	                    if (DateUtil.isCellDateFormatted(cell)) {
+	                        System.out.println("Date format "+cell.getDateCellValue());
+	                    } else {
+	                        System.out.println("not"+cell.getNumericCellValue());
+	                    }
+	                    break;
+	                case Cell.CELL_TYPE_BOOLEAN:
+	                    System.out.println("Bool "+cell.getBooleanCellValue());
+	                    break;
+	                case Cell.CELL_TYPE_FORMULA:
+	                    System.out.println("Formula "+cell.getCellFormula());
+	                    break;
+	                default:
+	                    System.out.println();
+	            }
+					
+					
+					/*
+					if (DateUtil.isCellDateFormatted(cell))
+					{
+					   SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					   String cellValue = sdf.format(cell.getDateCellValue());
+					
+					System.out.println(cellValue);
+					
+					//bufferDate is getting mm/dd/yyyy from excel cell
+					String[] dateSpliter = bufferDate.split("/");
+					String month= dateSpliter[0];
+					String day= dateSpliter[1];
+					String year= dateSpliter[2];
+					
+					int monthInt = Integer.parseInt(month);
+					int dayInt = Integer.parseInt(day);
+					int yearInt = Integer.parseInt(year);
+					
+					//joda DateTime
+					_date = new DateTime(yearInt,monthInt,dayInt,0,0);
+					
+					po.setDate(_date);
+					
+					}*/
+		
+					
+					
 					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					lbs = cell.getStringCellValue();
+					_status = cell.getStringCellValue();
+					
+					po.setStatus(_status);
 					
 				}
-
-				
-
-				//puts items into map and the key is the job number
+				if (cit.hasNext()) {
+					cell = cit.next();
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					_totalSale = Double.parseDouble(cell.getStringCellValue());
+					
+					po.setTotalSale(_totalSale);
+					
+				}
+				//puts items into map and the key is the PO number
+				poMap.put(_poNumber, po);
 				
 			}
+            
+            //test to make sure the file is outputting
+    		for(Map.Entry<Integer,  POModel> entry : poMap.entrySet()){
+    			POModel it = ( POModel) entry.getValue();
+    			
+    			System.out.println("Key: "+entry.getKey() + " " +"PO Number "+it.getPoNumber()+" "+ "Sales Number "+it.getSalesOrder() + " "+
+    					" Date "+ it.getDate()+" "+it.getStatus()+" "+it.getTotalSale());
+
+    		}
 			
 			workbook.close();
 		
@@ -138,7 +228,10 @@ public class PoResource {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            throw new RuntimeException("Array out of bounds "+e);
+        }
 		return "processing done of file" + name;
 
     }

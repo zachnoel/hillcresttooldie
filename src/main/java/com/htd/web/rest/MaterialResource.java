@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-import com.hillcresttooldie.model.Items;
+import com.hillcresttooldie.model.MaterialModel;
 import com.htd.domain.Material;
 import com.htd.repository.MaterialRepository;
 import com.htd.web.rest.util.PaginationUtil;
@@ -48,7 +48,7 @@ import com.htd.web.rest.util.PaginationUtil;
 public class MaterialResource {
 
     private final Logger log = LoggerFactory.getLogger(MaterialResource.class);
-    private Map<Long, Items> map1 = new HashMap<Long, Items>();
+    private Map<Long,  MaterialModel> map1 = new HashMap<Long,  MaterialModel>();
     
     @Inject
     private MaterialRepository materialRepository;
@@ -72,7 +72,7 @@ public class MaterialResource {
             
             for (Iterator<Row> rit = sheet.rowIterator(); rit.hasNext();) {
 
-				Items items = new Items();
+            	MaterialModel materals = new  MaterialModel();
 				Row row = rit.next();
 				
 				if(row.getRowNum()==0){
@@ -86,46 +86,46 @@ public class MaterialResource {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					mat = cell.getStringCellValue();
-					items.setMat(mat);
+					materals.setMat(mat);
 
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					thick = cell.getStringCellValue();
-					items.setThick(thick);
+					materals.setThick(thick);
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					size = cell.getStringCellValue();
-					items.setSize(size);
+					materals.setSize(size);
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					lbsPerSheet = cell.getStringCellValue();
-					items.setLbsPerSheet(lbsPerSheet);
+					materals.setLbsPerSheet(lbsPerSheet);
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					lbs = cell.getStringCellValue();
-					items.setLbs(lbs);
+					materals.setLbs(lbs);
 				}
 
 				Long matValue = Long.parseLong(mat);
 
 				//puts items into map and the key is the job number
-				map1.put(matValue, items);
+				map1.put(matValue, materals);
 			}
 			
 			workbook.close();
 
              
          //test to make sure the file is outputting
-		for(Map.Entry<Long, Items> entry : map1.entrySet()){
-			Items it = (Items) entry.getValue();
+		for(Map.Entry<Long,  MaterialModel> entry : map1.entrySet()){
+			 MaterialModel it = ( MaterialModel) entry.getValue();
 			
 			System.out.println("Key: "+entry.getKey() + " " +"Thinkness "+it.getThick()+ it.getSize() + " "
 					+ it.getLbsPerSheet());

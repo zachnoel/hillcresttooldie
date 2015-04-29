@@ -1,10 +1,10 @@
 package com.hillcresttooldie.model;
 
-public class Items {
+public class MaterialModel {
 	
 	private String Mat, thick, size, lbsPerSheet, lbs;
 
-	public Items() {
+	public MaterialModel() {
 
 	}
 
