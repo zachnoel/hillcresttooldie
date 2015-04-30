@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -47,12 +44,9 @@ import com.htd.repository.PoRepository;
 import com.htd.web.rest.util.PaginationUtil;
 //File upload imports
 //Apache POI imports
-
-
 /**
  * REST controller for managing Po.
  */
-
 @RestController
 @RequestMapping("/api")
 public class PoResource {
@@ -61,24 +55,20 @@ public class PoResource {
     private Map<Integer,POModel> poMap = new HashMap<Integer,POModel>();
     @Inject
     private PoRepository poRepository;
-
-    
+   
     /**
      * Upload PO file for processing.
      */  
     @RequestMapping(value="/fileupload/po", method=RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
             @RequestParam("file") MultipartFile file){
-        
-       
+          
     	int _id, _poNumber = 0;
     	String _salesOrder, _status;
     	DateTime _date;
     	double _totalSale;
-   
-    	
-        try {
-        	
+     	
+        try {      	
             byte[] byteArr = file.getBytes();
         	
             InputStream file2 = new ByteArrayInputStream(byteArr);
@@ -98,7 +88,6 @@ public class PoResource {
 				if(row.getRowNum()==0){
 					continue;
 				}
-
 				Iterator<Cell> cit = row.cellIterator();
 				Cell cell;
 
@@ -106,9 +95,7 @@ public class PoResource {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					_id = Integer.parseInt(cell.getStringCellValue());
-					po.setId(_id);
-					
-
+					po.setId(_id);					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
@@ -122,82 +109,37 @@ public class PoResource {
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					_salesOrder = cell.getStringCellValue();
 					
-					po.setSalesOrder(_salesOrder);
-					
+					po.setSalesOrder(_salesOrder);				
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					//String bufferDate = cell.getStringCellValue();
+					cell.setCellType(Cell.CELL_TYPE_NUMERIC);
 					
-					/*DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-					java.util.Date d =  cell.getDateCellValue();
-					String buy_date = df.format(d);
-					System.out.println("date is :- "+ buy_date);*/
-					
-					
-					//for some reason the date is return a string, print it out and it is in weird
-					//format. I am trying to figure out how to convert it to a date then store it
-					// as a date using Joda. The issue is apache poi, not sure what the issue is at the moment.
-					
-					switch (cell.getCellType()) {
-	                case Cell.CELL_TYPE_STRING:
-	                    System.out.println("String "+cell.getRichStringCellValue().getString());
-	                    break;
-	                case Cell.CELL_TYPE_NUMERIC:
-	                    if (DateUtil.isCellDateFormatted(cell)) {
-	                        System.out.println("Date format "+cell.getDateCellValue());
-	                    } else {
-	                        System.out.println("not"+cell.getNumericCellValue());
-	                    }
-	                    break;
-	                case Cell.CELL_TYPE_BOOLEAN:
-	                    System.out.println("Bool "+cell.getBooleanCellValue());
-	                    break;
-	                case Cell.CELL_TYPE_FORMULA:
-	                    System.out.println("Formula "+cell.getCellFormula());
-	                    break;
-	                default:
-	                    System.out.println();
-	            }
-					
-					
-					/*
 					if (DateUtil.isCellDateFormatted(cell))
 					{
 					   SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					   String cellValue = sdf.format(cell.getDateCellValue());
 					
-					System.out.println(cellValue);
+					   //System.out.println(cellValue);
 					
-					//bufferDate is getting mm/dd/yyyy from excel cell
-					String[] dateSpliter = bufferDate.split("/");
-					String month= dateSpliter[0];
-					String day= dateSpliter[1];
-					String year= dateSpliter[2];
+					   //bufferDate is getting mm/dd/yyyy from excel cell
+					   String[] dateSpliter = cellValue.split("/");
+					   int month= Integer.parseInt(dateSpliter[0]);
+					   int day= Integer.parseInt(dateSpliter[1]);
+					   int year= Integer.parseInt(dateSpliter[2]);
+						
+					   //joda DateTime format will look like 2015-03-03T00:00:00.000+01:00
+					   _date = new DateTime(year,month,day,0,0);
 					
-					int monthInt = Integer.parseInt(month);
-					int dayInt = Integer.parseInt(day);
-					int yearInt = Integer.parseInt(year);
-					
-					//joda DateTime
-					_date = new DateTime(yearInt,monthInt,dayInt,0,0);
-					
-					po.setDate(_date);
-					
-					}*/
-		
-					
-					
-					
+					   po.setDate(_date);				
+					}
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					_status = cell.getStringCellValue();
 					
-					po.setStatus(_status);
-					
+					po.setStatus(_status);					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
@@ -210,20 +152,16 @@ public class PoResource {
 				//puts items into map and the key is the PO number
 				poMap.put(_poNumber, po);
 				
-			}
-            
+			}         
             //test to make sure the file is outputting
     		for(Map.Entry<Integer,  POModel> entry : poMap.entrySet()){
     			POModel it = ( POModel) entry.getValue();
     			
     			System.out.println("Key: "+entry.getKey() + " " +"PO Number "+it.getPoNumber()+" "+ "Sales Number "+it.getSalesOrder() + " "+
     					" Date "+ it.getDate()+" "+it.getStatus()+" "+it.getTotalSale());
-
-    		}
-			
+    		}			
 			workbook.close();
-		
-             
+		           
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -235,10 +173,6 @@ public class PoResource {
 		return "processing done of file" + name;
 
     }
-    
-  
-
-
     /**
      * POST  /pos -> Create a new po.
      */
@@ -285,7 +219,6 @@ public class PoResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pos", offset, limit);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
-
     /**
      * GET  /pos/:id -> get the "id" po.
      */
@@ -301,7 +234,6 @@ public class PoResource {
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
     /**
      * DELETE  /pos/:id -> delete the "id" po.
      */
