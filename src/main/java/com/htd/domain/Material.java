@@ -1,23 +1,36 @@
 package com.htd.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Material.
  */
 @Entity
+//@NamedQuery(name = "Material.uploadMaterialData", query= " insert into T_MATERIAL (id, dollar_per_lb, inventory_count, lb_per_sheet, material_number, material_size, material_thickness) values (null, ?, ?, ?, ?, ?, ?))")
 @Table(name = "T_MATERIAL")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Material implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
 
     @Column(name = "material_number")
@@ -109,7 +122,7 @@ public class Material implements Serializable {
 
         return true;
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hashCode(id);

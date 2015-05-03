@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -38,7 +41,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-import com.hillcresttooldie.model.POModel;
 import com.htd.domain.Po;
 import com.htd.repository.PoRepository;
 import com.htd.web.rest.util.PaginationUtil;
@@ -52,7 +54,7 @@ import com.htd.web.rest.util.PaginationUtil;
 public class PoResource {
 
     private final Logger log = LoggerFactory.getLogger(PoResource.class);
-    private Map<Integer,POModel> poMap = new HashMap<Integer,POModel>();
+    private Map<Integer,Po> poMap = new HashMap<Integer,Po>();
     @Inject
     private PoRepository poRepository;
    
@@ -60,13 +62,12 @@ public class PoResource {
      * Upload PO file for processing.
      */  
     @RequestMapping(value="/fileupload/po", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
-            @RequestParam("file") MultipartFile file){
-          
-    	int _id, _poNumber = 0;
-    	String _salesOrder, _status;
-    	DateTime _date;
-    	double _totalSale;
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
+    	
+    	/*if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("The 'name' parameter must not be null or empty");
+        }*/
+
      	
         try {      	
             byte[] byteArr = file.getBytes();
@@ -81,9 +82,8 @@ public class PoResource {
             
             for (Iterator<Row> rit = sheet.rowIterator(); rit.hasNext();) {
 
-				POModel po = new POModel();
 				Row row = rit.next();
-				
+				Po po = new Po();
 				//skip header in excel file
 				if(row.getRowNum()==0){
 					continue;
@@ -94,22 +94,22 @@ public class PoResource {
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					_id = Integer.parseInt(cell.getStringCellValue());
+					Long _id = Long.parseLong(cell.getStringCellValue());
 					po.setId(_id);					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					_poNumber = Integer.parseInt(cell.getStringCellValue());
-					po.setPoNumber(_poNumber);
+					String _poNumber = cell.getStringCellValue();
+					po.setPo_number(_poNumber);
 					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					_salesOrder = cell.getStringCellValue();
+					String _salesOrder = cell.getStringCellValue();
 					
-					po.setSalesOrder(_salesOrder);				
+					po.setSales_order_number(_salesOrder);				
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
@@ -128,37 +128,41 @@ public class PoResource {
 					   int day= Integer.parseInt(dateSpliter[1]);
 					   int year= Integer.parseInt(dateSpliter[2]);
 						
-					   //joda DateTime format will look like 2015-03-03T00:00:00.000+01:00
-					   _date = new DateTime(year,month,day,0,0);
+					   LocalDate _date = new LocalDate(year,month,day);
 					
-					   po.setDate(_date);				
+					   po.setDue_date(_date);				
 					}
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					_status = cell.getStringCellValue();
+					String _status = cell.getStringCellValue();
 					
 					po.setStatus(_status);					
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
-					_totalSale = Double.parseDouble(cell.getStringCellValue());
-					
-					po.setTotalSale(_totalSale);
+					Double _totalSale = Double.parseDouble(cell.getStringCellValue());
+					//converting double to BigDecimal
+					BigDecimal totalSale_bigDecimal = new BigDecimal(_totalSale,MathContext.DECIMAL64);
+					po.setTotal_sale(totalSale_bigDecimal);
 					
 				}
+				
+				int poNumber = Integer.parseInt(po.getPo_number());
 				//puts items into map and the key is the PO number
-				poMap.put(_poNumber, po);
+				poMap.put(poNumber, po);
+				
+				 poRepository.save(po);
 				
 			}         
             //test to make sure the file is outputting
-    		for(Map.Entry<Integer,  POModel> entry : poMap.entrySet()){
-    			POModel it = ( POModel) entry.getValue();
+    		for(Map.Entry<Integer,  Po> entry : poMap.entrySet()){
+    			Po it = ( Po) entry.getValue();
     			
-    			System.out.println("Key: "+entry.getKey() + " " +"PO Number "+it.getPoNumber()+" "+ "Sales Number "+it.getSalesOrder() + " "+
-    					" Date "+ it.getDate()+" "+it.getStatus()+" "+it.getTotalSale());
+    			System.out.println("Key: "+entry.getKey() + " " +"PO Number "+it.getPo_number()+" "+ "Sales Number "+it.getSales_order_number() + " "+
+    					" Date "+ it.getDue_date()+" "+it.getStatus()+" Total Sale: "+it.getTotal_sale());
     		}			
 			workbook.close();
 		           
@@ -170,7 +174,7 @@ public class PoResource {
         catch (ArrayIndexOutOfBoundsException e) {
             throw new RuntimeException("Array out of bounds "+e);
         }
-		return "processing done of file" + name;
+		return "processing done of file";
 
     }
     /**

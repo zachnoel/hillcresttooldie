@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -35,7 +37,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-import com.hillcresttooldie.model.MaterialModel;
 import com.htd.domain.Material;
 import com.htd.repository.MaterialRepository;
 import com.htd.web.rest.util.PaginationUtil;
@@ -48,16 +49,16 @@ import com.htd.web.rest.util.PaginationUtil;
 public class MaterialResource {
 
     private final Logger log = LoggerFactory.getLogger(MaterialResource.class);
-    private Map<Long,  MaterialModel> map1 = new HashMap<Long,  MaterialModel>();
+    private Map<Long,  Material> materialMap = new HashMap<Long,  Material>();
+    private String material_number, material_size;
+    private BigDecimal material_thickness, lb_per_sheet, dollar_per_lb;
     
     @Inject
     private MaterialRepository materialRepository;
 
     @RequestMapping(value="/fileupload/material", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
-            @RequestParam("file") MultipartFile file){
-             
-        String mat = null, thick=null, size=null, lbsPerSheet=null, lbs=null;
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
+                    
         try {
         	
             byte[] byteArr = file.getBytes();
@@ -72,8 +73,8 @@ public class MaterialResource {
             
             for (Iterator<Row> rit = sheet.rowIterator(); rit.hasNext();) {
 
-            	MaterialModel materals = new  MaterialModel();
 				Row row = rit.next();
+				Material material = new Material();
 				
 				if(row.getRowNum()==0){
 					continue;
@@ -81,54 +82,67 @@ public class MaterialResource {
 
 				Iterator<Cell> cit = row.cellIterator();
 				Cell cell;
+				
+				if (cit.hasNext()) {
+					cell = cit.next();
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					this.material_number = cell.getStringCellValue();
+					material.setMaterial_number(material_number);
+				}
+				if (cit.hasNext()) {
+					cell = cit.next();
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					String materialThicknessAsString = cell.getStringCellValue();
+					double materalThicknessAsDouble = Double.parseDouble(materialThicknessAsString);
+					//now the conversion into big decimal happens
+					BigDecimal materialThickness = new BigDecimal(materalThicknessAsDouble,MathContext.DECIMAL64);
+					this.material_thickness = materialThickness;
+					material.setMaterial_thickness(materialThickness);
+				}
+				if (cit.hasNext()) {
+					cell = cit.next();
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					this.material_size = cell.getStringCellValue();
+					material.setMaterial_size(material_size);
+				}
+				if (cit.hasNext()) {
+					cell = cit.next();
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					String lb_per_sheet_as_string = cell.getStringCellValue();
+					double lbs_per_sheet_asDouble = Double.parseDouble(lb_per_sheet_as_string);
+					//now the conversion into big decimal happens
+					BigDecimal lbs_per_sheet_as_BigDecimal = new BigDecimal(lbs_per_sheet_asDouble,MathContext.DECIMAL64);
+					this.lb_per_sheet = lbs_per_sheet_as_BigDecimal;
+					material.setLb_per_sheet(lbs_per_sheet_as_BigDecimal);
+				}
+				if (cit.hasNext()) {
+					cell = cit.next();
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					String dollar_per_lb = cell.getStringCellValue();
+					Double perLb_as_double = Double.parseDouble(dollar_per_lb);
+					//now the conversion into big decimal happens
+					BigDecimal dollar_per_lb_as_BigDecimal = new BigDecimal(perLb_as_double,MathContext.DECIMAL64);
+					this.dollar_per_lb = dollar_per_lb_as_BigDecimal;
+					material.setDollar_per_lb(dollar_per_lb_as_BigDecimal);
+				}
 
-				if (cit.hasNext()) {
-					cell = cit.next();
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					mat = cell.getStringCellValue();
-					materals.setMat(mat);
+				Long materialValue = Long.parseLong(material.getMaterial_number());
 
-				}
-				if (cit.hasNext()) {
-					cell = cit.next();
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					thick = cell.getStringCellValue();
-					materals.setThick(thick);
-				}
-				if (cit.hasNext()) {
-					cell = cit.next();
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					size = cell.getStringCellValue();
-					materals.setSize(size);
-				}
-				if (cit.hasNext()) {
-					cell = cit.next();
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					lbsPerSheet = cell.getStringCellValue();
-					materals.setLbsPerSheet(lbsPerSheet);
-				}
-				if (cit.hasNext()) {
-					cell = cit.next();
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					lbs = cell.getStringCellValue();
-					materals.setLbs(lbs);
-				}
-
-				Long matValue = Long.parseLong(mat);
-
-				//puts items into map and the key is the job number
-				map1.put(matValue, materals);
+				//puts materials into map and the key is the material number
+				materialMap.put(materialValue, material);
+				
+				materialRepository.save(material);
 			}
 			
 			workbook.close();
 
              
          //test to make sure the file is outputting
-		for(Map.Entry<Long,  MaterialModel> entry : map1.entrySet()){
-			 MaterialModel it = ( MaterialModel) entry.getValue();
+		for(Map.Entry<Long,  Material> entry : materialMap.entrySet()){
+			 Material it = (Material) entry.getValue();
 			
-			System.out.println("Key: "+entry.getKey() + " " +"Thinkness "+it.getThick()+ it.getSize() + " "
-					+ it.getLbsPerSheet());
+			System.out.println("Key: "+entry.getKey() + " " +"Thinkness "+it.getMaterial_thickness()+" Size: "+ it.getMaterial_size() + " "
+					+ it.getLb_per_sheet() +" Dollar per lbs: "+it.getDollar_per_lb());
 
 		}
 		
@@ -138,7 +152,7 @@ public class MaterialResource {
         } catch (IOException e) {
             e.printStackTrace();
         }
-		return "processing done of file" + name;
+		return "processing done of file";
 
     }
     
