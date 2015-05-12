@@ -13,6 +13,7 @@
                 "title": "Part"
             },
             "part_number": "Part Number",
+            "part_description": "Part Description",
             "plasma_hrs_per_part": "Plasma Hrs/Part",
             "grind_hrs_per_part": "Grind Hrs/Part",
             "mill_hrs_per_part": "Mill Hrs/Part",

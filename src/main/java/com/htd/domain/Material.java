@@ -36,16 +36,16 @@ public class Material implements Serializable {
     @Column(name = "material_number")
     private String material_number;
 
-    @Column(name = "material_thickness", precision=10, scale=2)
+    @Column(name = "material_thickness", precision=12, scale=4)
     private BigDecimal material_thickness;
 
     @Column(name = "material_size")
     private String material_size;
 
-    @Column(name = "lb_per_sheet", precision=10, scale=2)
+    @Column(name = "lb_per_sheet", precision=12, scale=4)
     private BigDecimal lb_per_sheet;
 
-    @Column(name = "dollar_per_lb", precision=10, scale=2)
+    @Column(name = "dollar_per_lb", precision=12, scale=4)
     private BigDecimal dollar_per_lb;
 
     @Column(name = "inventory_count")

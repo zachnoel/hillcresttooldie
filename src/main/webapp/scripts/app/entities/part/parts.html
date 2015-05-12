@@ -30,6 +30,12 @@
 
                         </div>
                         <div class="form-group">
+                            <label translate="hillcresttooldieApp.part.part_description">Part_description</label>
+                            <input type="text" class="form-control" name="part_description"
+                                   ng-model="part.part_description">
+
+                        </div>
+                        <div class="form-group">
                             <label translate="hillcresttooldieApp.part.plasma_hrs_per_part">Plasma_hrs_per_part</label>
                             <input type="number" class="form-control" name="plasma_hrs_per_part"
                                    ng-model="part.plasma_hrs_per_part">
@@ -116,10 +122,13 @@
                 <tr>
                     <th>ID</th>
                     <th translate="hillcresttooldieApp.part.part_number">Part_number</th>
+                    <th translate="hillcresttooldieApp.part.part_description">Part_description</th>
+                  <!--
                     <th translate="hillcresttooldieApp.part.plasma_hrs_per_part">Plasma_hrs_per_part</th>
                     <th translate="hillcresttooldieApp.part.grind_hrs_per_part">Grind_hrs_per_part</th>
                     <th translate="hillcresttooldieApp.part.mill_hrs_per_part">Mill_hrs_per_part</th>
                     <th translate="hillcresttooldieApp.part.brakepress_hrs_per_part">Brakepress_hrs_per_part</th>
+                  -->
                     <th translate="hillcresttooldieApp.part.lb_per_part">Lb_per_part</th>
                     <th translate="hillcresttooldieApp.part.inventory_count">Inventory_count</th>
                     <th></th>
@@ -129,10 +138,13 @@
                 <tr ng-repeat="part in parts">
                     <td><a ui-sref="partDetail({id:part.id})">{{part.id}}</a></td>
                     <td>{{part.part_number}}</td>
+                    <td>{{part.part_description}}</td>
+                <!--
                     <td>{{part.plasma_hrs_per_part}}</td>
                     <td>{{part.grind_hrs_per_part}}</td>
                     <td>{{part.mill_hrs_per_part}}</td>
                     <td>{{part.brakepress_hrs_per_part}}</td>
+                -->
                     <td>{{part.lb_per_part}}</td>
                     <td>{{part.inventory_count}}</td>
                     <td>

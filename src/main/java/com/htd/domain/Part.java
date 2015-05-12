@@ -25,19 +25,22 @@ public class Part implements Serializable {
     @Column(name = "part_number")
     private String part_number;
 
-    @Column(name = "plasma_hrs_per_part", precision=10, scale=2)
+    @Column(name = "part_description")
+    private String part_description;
+
+    @Column(name = "plasma_hrs_per_part", precision=12, scale=4)
     private BigDecimal plasma_hrs_per_part;
 
-    @Column(name = "grind_hrs_per_part", precision=10, scale=2)
+    @Column(name = "grind_hrs_per_part", precision=12, scale=4)
     private BigDecimal grind_hrs_per_part;
 
-    @Column(name = "mill_hrs_per_part", precision=10, scale=2)
+    @Column(name = "mill_hrs_per_part", precision=12, scale=4)
     private BigDecimal mill_hrs_per_part;
 
-    @Column(name = "brakepress_hrs_per_part", precision=10, scale=2)
+    @Column(name = "brakepress_hrs_per_part", precision=12, scale=4)
     private BigDecimal brakepress_hrs_per_part;
 
-    @Column(name = "lb_per_part", precision=10, scale=2)
+    @Column(name = "lb_per_part", precision=12, scale=4)
     private BigDecimal lb_per_part;
 
     @Column(name = "inventory_count")
@@ -64,6 +67,14 @@ public class Part implements Serializable {
 
     public void setPart_number(String part_number) {
         this.part_number = part_number;
+    }
+
+    public String getPart_description() {
+        return part_description;
+    }
+
+    public void setPart_description(String part_description) {
+        this.part_description = part_description;
     }
 
     public BigDecimal getPlasma_hrs_per_part() {
@@ -148,6 +159,7 @@ public class Part implements Serializable {
         return "Part{" +
                 "id=" + id +
                 ", part_number='" + part_number + "'" +
+                ", part_description='" + part_description + "'" +
                 ", plasma_hrs_per_part='" + plasma_hrs_per_part + "'" +
                 ", grind_hrs_per_part='" + grind_hrs_per_part + "'" +
                 ", mill_hrs_per_part='" + mill_hrs_per_part + "'" +
