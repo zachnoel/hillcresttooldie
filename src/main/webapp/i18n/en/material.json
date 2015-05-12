@@ -3,8 +3,8 @@
         "material" : {
             "home": {
                 "title": "Materials",
-                "createLabel": "Create a new Material",
-                "createOrEditLabel": "Create or edit a Material"
+                "createLabel": "Create Material",
+                "createOrEditLabel": "Create or Edit Material"
             },
             "delete": {
                 "question": "Are you sure you want to delete Material {{ id }}?"
@@ -12,12 +12,12 @@
             "detail": {
                 "title": "Material"
             },
-            "material_number": "Material_number",
-            "material_thickness": "Material_thickness",
-            "material_size": "Material_size",
-            "lb_per_sheet": "Lb_per_sheet",
-            "dollar_per_lb": "Dollar_per_lb",
-            "inventory_count": "Inventory_count"
+            "material_number": "Material Number",
+            "material_thickness": "Thickness",
+            "material_size": "Size",
+            "lb_per_sheet": "Pounds/Sheet",
+            "dollar_per_lb": "Dollars/Pound",
+            "inventory_count": "Inventory"
         }
     }
 }
