@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+	<changeSet author="noelz (generated)" id="1431397374532-4">
+      <modifyDataType tableName="T_PART" columnName="plasma_hrs_per_part" newDataType="decimal(12,4)"/>
+      <modifyDataType tableName="T_PART" columnName="grind_hrs_per_part" newDataType="decimal(12,4)"/>
+      <modifyDataType tableName="T_PART" columnName="mill_hrs_per_part" newDataType="decimal(12,4)"/>
+      <modifyDataType tableName="T_PART" columnName="brakepress_hrs_per_part" newDataType="decimal(12,4)"/>
+      <modifyDataType tableName="T_PART" columnName="lb_per_part" newDataType="decimal(12,4)"/>
+
+      <modifyDataType tableName="T_MATERIAL" columnName="material_thickness" newDataType="decimal(12,4)"/>
+      <modifyDataType tableName="T_MATERIAL" columnName="lb_per_sheet" newDataType="decimal(12,4)"/>
+      <modifyDataType tableName="T_MATERIAL" columnName="dollar_per_lb" newDataType="decimal(12,4)"/>	
+   </changeSet>
+
+
+</databaseChangeLog>
