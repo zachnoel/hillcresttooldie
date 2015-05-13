@@ -7,14 +7,14 @@
     </button><br><br>
 
 
-    <!--File upload-->
+    <!--File upload
     <div class="uploadForms">
     <form method="POST" enctype="multipart/form-data" action="api/fileupload/po">
          <h4>Load Materials through Excel: </h4>
          <input type="file" name="file"/><br> 
          <input type="submit" value="Upload" />
     </form>
-    </div>
+    </div>-->
     
 
     <div class="modal fade" id="savePoModal" tabindex="-1" role="dialog" aria-labelledby="myPoLabel"
@@ -39,6 +39,11 @@
                             <input type="text" class="form-control" name="po_number"
                                    ng-model="po.po_number">
 
+                        </div>
+                        <div class="form-group">
+                            <label translate="hillcresttooldieApp.po.customer">customer</label>
+                            <select class="form-control" multiple name="customer" ng-model="po.customers" ng-options="customer as customer.customer_name for customer in customers track by customer.id">
+                            </select>
                         </div>
                         <div class="form-group">
                             <label translate="hillcresttooldieApp.po.sales_order_number">Sales_order_number</label>
@@ -66,15 +71,43 @@
                         </div>
 
                         <div class="form-group">
-                            <label translate="hillcresttooldieApp.po.part">part</label>
+                            <label>Parts</label>
                             <select class="form-control" multiple name="part" ng-model="po.parts" ng-options="part as part.part_number for part in parts track by part.id">
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label translate="hillcresttooldieApp.po.customer">customer</label>
-                            <select class="form-control" multiple name="customer" ng-model="po.customers" ng-options="customer as customer.customer_name for customer in customers track by customer.id">
-                            </select>
-                        </div>
+                            </select>                      
+
+                                <!--<table>
+                                    <thead>
+                                        <tr>
+                                            <td>Part Number</td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>Quantity</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <select class="form-control" name="part2" ng-model="po.parts2" ng-options="part as part.part_number for part in parts track by part.id"></select>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <input class="form-control" type="text" size="5"></input>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select class="form-control" name="part2" ng-model="po.parts2" ng-options="part as part.part_number for part in parts track by part.id"></select>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <input class="form-control" type="text" size="5"></input>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>-->
+
+
+                         </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">

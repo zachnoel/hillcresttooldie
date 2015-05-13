@@ -19,8 +19,11 @@ angular.module('hillcresttooldieApp')
         $scope.loadAll();
 
         $scope.create = function () {
-            Po.update($scope.po,
-                function () {
+
+            Po.update($scope.po, function () {
+                    console.log("PO.update-----------");
+                    console.log($scope.po);
+                    console.log($scope.po.parts)
                     $scope.loadAll();
                     $('#savePoModal').modal('hide');
                     $scope.clear();
@@ -30,6 +33,7 @@ angular.module('hillcresttooldieApp')
         $scope.update = function (id) {
             Po.get({id: id}, function(result) {
                 $scope.po = result;
+                console.log(result);
                 $('#savePoModal').modal('show');
             });
         };
