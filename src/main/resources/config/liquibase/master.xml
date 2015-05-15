@@ -9,7 +9,7 @@
     <include file="classpath:config/liquibase/changelog/20150423015454_added_entity_Material.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150423015823_added_entity_Part.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150423020207_added_entity_Customer.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150423020427_added_entity_Po.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150423020428_added_entity_Po.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150511212246_changelog.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150511222758_changelog.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->

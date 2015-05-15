@@ -10,7 +10,7 @@
     <!--
         Added the entity Po.
     -->
-    <changeSet id="20150423020427" author="jhipster">
+    <changeSet id="20150423020428" author="jhipster">
         <createTable tableName="T_PO">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -22,6 +22,7 @@
             <column name="total_sale" type="decimal(10,2)"/>
         </createTable>
         
+        <!--
         <createTable tableName="T_PO_PART">
             <column name="parts_id" type="bigint">
                 <constraints nullable="false"/>
@@ -45,7 +46,7 @@
                                  referencedColumnNames="id"
                                  referencedTableName="T_PART"/>
         
-        <createTable tableName="T_PO_CUSTOMER">
+       <createTable tableName="T_PO_CUSTOMER">
             <column name="customers_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -67,6 +68,7 @@
                                  constraintName="fk_customer_customer_po_id"
                                  referencedColumnNames="id"
                                  referencedTableName="T_CUSTOMER"/>
+        -->
         
     </changeSet>
 </databaseChangeLog>

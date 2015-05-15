@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface PoRepository extends JpaRepository<Po,Long> {
 
-    @Query("select po from Po po left join fetch po.parts left join fetch po.customers where po.id =:id")
-    Po findOneWithEagerRelationships(@Param("id") Long id);
+    //@Query("select po from Po po left join fetch po.parts left join fetch po.customers where po.id =:id")
+    //Po findOneWithEagerRelationships(@Param("id") Long id);
     
 	 
 	 @Query(value="SELECT u FROM T_PO u WHERE u.id LIKE %?1", nativeQuery = true)

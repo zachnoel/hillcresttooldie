@@ -226,7 +226,7 @@ public class PoResource {
     /**
      * GET  /pos/:id -> get the "id" po.
      */
-    @RequestMapping(value = "/pos/{id}",
+    /*@RequestMapping(value = "/pos/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -237,7 +237,20 @@ public class PoResource {
                 po,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }*/
+    @RequestMapping(value = "/pos/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Po> get(@PathVariable Long id) {
+        log.debug("REST request to get Po : {}", id);
+        return Optional.ofNullable(poRepository.findOne(id))
+            .map(po -> new ResponseEntity<>(
+                po,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    
     /**
      * DELETE  /pos/:id -> delete the "id" po.
      */

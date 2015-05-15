@@ -51,7 +51,7 @@ public class Po implements Serializable {
     @Column(name = "total_sale", precision=10, scale=2)
     private BigDecimal total_sale;
 
-    @ManyToMany
+   /* @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "T_PO_PART",
                joinColumns = @JoinColumn(name="pos_id", referencedColumnName="ID"),
@@ -64,7 +64,7 @@ public class Po implements Serializable {
                joinColumns = @JoinColumn(name="pos_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="customers_id", referencedColumnName="ID"))
     private Set<Customer> customers = new HashSet<>();
-
+*/
     public Long getId() {
         return id;
     }
@@ -113,7 +113,7 @@ public class Po implements Serializable {
         this.total_sale = total_sale;
     }
 
-    public Set<Part> getParts() {
+    /*public Set<Part> getParts() {
         return parts;
     }
 
@@ -128,7 +128,7 @@ public class Po implements Serializable {
     public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
     }
-
+    */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

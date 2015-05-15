@@ -3,8 +3,8 @@
 angular.module('hillcresttooldieApp')
     .controller('PoController', function ($scope, Po, Part, Customer, ParseLinks) {
         $scope.pos = [];
-        $scope.parts = Part.query();
-        $scope.customers = Customer.query();
+        //$scope.parts = Part.query();
+        //$scope.customers = Customer.query();
         $scope.page = 1;
         $scope.loadAll = function() {
             Po.query({page: $scope.page, per_page: 40}, function(result, headers) {

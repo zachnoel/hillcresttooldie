@@ -41,15 +41,9 @@
 
                         </div>
                         <div class="form-group">
-                            <label translate="hillcresttooldieApp.po.customer">customer</label>
-                            <select class="form-control" multiple name="customer" ng-model="po.customers" ng-options="customer as customer.customer_name for customer in customers track by customer.id">
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label translate="hillcresttooldieApp.po.sales_order_number">Sales_order_number</label>
                             <input type="text" class="form-control" name="sales_order_number"
                                    ng-model="po.sales_order_number">
-
                         </div>
                         <div class="form-group">
                             <label translate="hillcresttooldieApp.po.due_date">Due_date</label>
@@ -69,45 +63,6 @@
                                    ng-model="po.total_sale">
 
                         </div>
-
-                        <div class="form-group">
-                            <label>Parts</label>
-                            <select class="form-control" multiple name="part" ng-model="po.parts" ng-options="part as part.part_number for part in parts track by part.id">
-                            </select>                      
-
-                                <!--<table>
-                                    <thead>
-                                        <tr>
-                                            <td>Part Number</td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>Quantity</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <select class="form-control" name="part2" ng-model="po.parts2" ng-options="part as part.part_number for part in parts track by part.id"></select>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <input class="form-control" type="text" size="5"></input>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <select class="form-control" name="part2" ng-model="po.parts2" ng-options="part as part.part_number for part in parts track by part.id"></select>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <input class="form-control" type="text" size="5"></input>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>-->
-
-
-                         </div>
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
@@ -177,58 +132,24 @@
                         <button type="submit"
                                 ui-sref="poDetail({id:po.id})"
                                 class="btn btn-info">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
                                 ng-click="update(po.id)"
                                 class="btn btn-primary">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
                                 ng-click="delete(po.id)"
                                 class="btn btn-danger">
-                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
                         </button>
                     </td>
                 </tr>
                 <tr ng-if="po.expanded" ng-repeat-end=""> <!--start of expand section -->
-                    <td colspan='3'>
-                    <h4>Customers</h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>ID</td>
-                                <td>Customer Name</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="customer in customers">
-                                <td>{{customer.id}}</td>
-                                <td>{{customer.customer_name}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <td colspan='8'>
 
-
-                    </td>
-                    <td></td>
-                    <td colspan='3'>
-                    <h4>Parts</h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td class='bold'>ID</td>
-                                <td class='bold'>Part Number</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="part in parts">
-                                <td>{{part.id}}</td>
-                                <td>{{part.part_number}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                         PO Parts will go here 
 
                     </td>
                 </tr> <!--end of expand section -->
