@@ -1,0 +1,20 @@
+{
+    "hillcresttooldieApp": {
+        "po_part" : {
+            "home": {
+                "title": "Po_parts",
+                "createLabel": "Create a new Po_part",
+                "createOrEditLabel": "Create or edit a Po_part"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Po_part {{ id }}?"
+            },
+            "detail": {
+                "title": "Po_part"
+            },
+            "part_quantity": "Part_quantity",
+            "part": "part",
+            "po": "po"
+        }
+    }
+}

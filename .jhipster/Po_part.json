@@ -1,0 +1,45 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "part",
+            "relationshipNameCapitalized": "Part",
+            "relationshipFieldName": "part",
+            "otherEntityName": "part",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "Part",
+            "otherEntityField": "part_number"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "po",
+            "relationshipNameCapitalized": "Po",
+            "relationshipFieldName": "po",
+            "otherEntityName": "po",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "Po",
+            "otherEntityField": "po_number"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "part_quantity",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Part_quantity",
+            "fieldNameUnderscored": "part_quantity",
+            "fieldInJavaBeanMethod": "Part_quantity",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150515212723",
+    "pagination": "no",
+    "validation": false
+}
