@@ -1,3 +1,11 @@
+
+
+.expandedInnerTable, .expandedInnerTable th, .expandedInnerTable td {
+	border-collapse: collapse;
+	border: 1px solid black;
+	padding: 5px;
+}
+
 .progress-bar {
     width: 300px; height: 14px;
     border-radius: 10px;

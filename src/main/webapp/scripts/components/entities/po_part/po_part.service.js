@@ -13,4 +13,9 @@ angular.module('hillcresttooldieApp')
             },
             'update': { method:'PUT' }
         });
-    });
+    })
+	.factory('PoParts', function ($resource) {
+	    return $resource('api/po_parts_by_po/:poId', {}, {
+	        'query': { method: 'GET', isArray: true}
+	    });
+	});

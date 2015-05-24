@@ -107,6 +107,7 @@
             <thead>
                 <tr>
                     <th></th>
+                    
                     <th>ID<br><input size='5' type='text' ng-model='search.id'></th>
                     <th>PO Number<br><input size='5' type='text' ng-model='search.po_number'></th>
                     <th>Order Number<br><input size='5' type='text' ng-model='search.sales_order_number'></th>
@@ -122,6 +123,7 @@
                       <button ng-if="po.expanded" ng-click="po.expanded = false">-</button>
                       <button ng-if="!po.expanded" ng-click="po.expanded = true; expand(po.id)">+</button>
                     </td>
+                   
                     <td><a ui-sref="poDetail({id:po.id})">{{po.id}}</a></td>
                     <td>{{po.po_number}}</td>
                     <td>{{po.sales_order_number}}</td>
@@ -153,17 +155,34 @@
                     <td colspan='8'>
 
                         <h4>Parts List</h4>
-                        <ul ng-repeat='po_part in po_part_list'>
-                            <li>PO - {{po_part.po.po_number}} | Part Number -{{po_part.part.part_number}} | Part Quantity - {{po_part.part_quantity}}
-                            </li>
-                        </ul>
-
+<!--                         <ul ng-repeat='po_part in po_part_list'> -->
+<!--                             <li>{{po_part.part.part_number}} - {{po_part.part_quantity}}</li> -->
+<!--                         </ul> -->
+							<table class='expandedInnerTable'>
+							<thead>
+							<tr>
+								
+								<th>Part</th>
+								<th>Quantity</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat='po_part in po_part_list'>
+								
+								<td>{{po_part.part.part_number}}</td>
+								<td>{{po_part.part_quantity}}</td>
+							</tr>
+							</tbody>
+							
+							</table>
+								
+							
                         <hr>
  
                   	<form name="poPartForm" role="form" novalidate ng-submit="createPoPart()">
-						<div class="hidden"> 
-                            <input type="text" class="form-control" name="id" ng-model="po_part.id" readonly>
-                        	<input class="form-control" name="po" ng-model="po_part.po.id"/>
+ 						<div class="hidden">
+                            <label>po part id</label><input type="text" name="id" ng-model="po_part.id" readonly><br>
+                        	<label>po id</label><input name="po" ng-model="po_part.po.id"/><br>
                         </div> 
 
                         	<label>Part</label>

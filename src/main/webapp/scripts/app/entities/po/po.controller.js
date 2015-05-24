@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('hillcresttooldieApp')
-    .controller('PoController', function ($scope, Po, Part, Po_part, Customer, ParseLinks) {
+    .controller('PoController', function ($scope, Po, Part, Po_part, PoParts, Customer, ParseLinks) {
         $scope.pos = [];
         $scope.po_part = [];
         $scope.po_part = {id: null, part_quantity: null};
         $scope.parts = Part.query();
-        $scope.po_part_list = Po_part.query();
+        $scope.po_part_list = [];
         $scope.page = 1;
+        
+        
         
         $scope.loadAll = function() {
             Po.query({page: $scope.page, per_page: 40}, function(result, headers) {
@@ -30,29 +32,35 @@ angular.module('hillcresttooldieApp')
         };
         
         $scope.createPoPart	= function (){
+        		var poId = $scope.po_part.po.id;
+        		var index = $scope.$index;
+        		alert(index);
         		Po_part.update($scope.po_part, function () {
-		        		 $scope.po_part = {id: null, part_quantity: null};
-		        		 $scope.po_part_list = Po_part.query();
-		                 //$scope.poPartForm.$setPristine();
-		                // $scope.poPartForm.$setUntouched();
-                });
+        				 $scope.po_part = {id: null, part_quantity: null, po: {id: poId}};
+        				 PoParts.query({poId: poId}, function(result) {
+        		                $scope.po_part_list = result;
+        		         });
+		        });
+        		$scope.loadAll();
         	
         };
 
         $scope.update = function (id) {
             Po.get({id: id}, function(result) {
                 $scope.po = result;
-                console.log(result);
                 $('#savePoModal').modal('show');
             });
         };
 
-        $scope.expand = function (id) {
-            Po.get({id: id}, function(result) {
-                $scope.po = result;
-                $scope.po_part = {po: {id: id}};
+        $scope.expand = function (poId) {
+        	console.log(this.$index);
+        	PoParts.query({poId: poId}, function(result) {
+                $scope.po_part_list = result;
+                $scope.po_part = {po: {id: poId}};
+                
             });
         };
+        
 
         $scope.delete = function (id) {
             Po.get({id: id}, function(result) {

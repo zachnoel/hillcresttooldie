@@ -71,6 +71,18 @@ public class Po_partResource {
         log.debug("REST request to get all Po_parts");
         return po_partRepository.findAll();
     }
+    
+    /**
+     * GET  /po_parts_by_po -> get all the po_parts for a given po ID.
+     */
+    @RequestMapping(value = "/po_parts_by_po/{poId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Po_part> getPartsByPo(@PathVariable Long poId) {
+    	log.debug("REST request to get all Po_parts by a given PO ID. PO ID given = " + poId);
+        return po_partRepository.findByPoId(poId);
+    }
 
     /**
      * GET  /po_parts/:id -> get the "id" po_part.
@@ -87,6 +99,7 @@ public class Po_partResource {
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    
 
     /**
      * DELETE  /po_parts/:id -> delete the "id" po_part.
