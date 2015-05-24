@@ -34,7 +34,7 @@ angular.module('hillcresttooldieApp')
         $scope.createPoPart	= function (){
         		var poId = $scope.po_part.po.id;
         		var index = $scope.$index;
-        		alert(index);
+        		//alert(index);
         		Po_part.update($scope.po_part, function () {
         				 $scope.po_part = {id: null, part_quantity: null, po: {id: poId}};
         				 PoParts.query({poId: poId}, function(result) {
