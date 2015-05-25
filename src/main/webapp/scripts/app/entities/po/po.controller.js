@@ -41,7 +41,7 @@ angular.module('hillcresttooldieApp')
         		                $scope.po_part_list = result;
         		         });
 		        });
-        		$scope.loadAll();
+        		
         	
         };
 
@@ -52,12 +52,15 @@ angular.module('hillcresttooldieApp')
             });
         };
 
-        $scope.expand = function (poId) {
-        	console.log(this.$index);
+        //on each row expand click 
+        $scope.expand = function (po, poId) {
+        	angular.forEach($scope.pos, function(po){
+        		po.expanded = false;
+        	});
+        	po.expanded = true;
         	PoParts.query({poId: poId}, function(result) {
                 $scope.po_part_list = result;
                 $scope.po_part = {po: {id: poId}};
-                
             });
         };
         
