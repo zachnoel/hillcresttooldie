@@ -6,7 +6,7 @@ angular.module('hillcresttooldieApp')
         $scope.materials = Material.query();
         $scope.page = 1;
         $scope.loadAll = function() {
-            Supplier.query({page: $scope.page, per_page: 20}, function(result, headers) {
+            Supplier.query({page: $scope.page, per_page: 10000}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.suppliers = result;
             });

@@ -12,9 +12,9 @@
             "detail": {
                 "title": "Supplier"
             },
-            "supplier_name": "Supplier_name",
-            "supplier_address": "Supplier_address",
-            "supplier_phone": "Supplier_phone",
+            "supplier_name": "Supplier Name",
+            "supplier_address": "Supplier Address",
+            "supplier_phone": "Supplier Phone",
             "material": "material"
         }
     }

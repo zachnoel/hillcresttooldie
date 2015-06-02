@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.htd.domain.util.CustomLocalDateSerializer;
 import com.htd.domain.util.ISO8601LocalDateDeserializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -51,20 +53,11 @@ public class Po implements Serializable {
     @Column(name = "total_sale", precision=10, scale=2)
     private BigDecimal total_sale;
 
-   /* @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "T_PO_PART",
-               joinColumns = @JoinColumn(name="pos_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="parts_id", referencedColumnName="ID"))
-    private Set<Part> parts = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "T_PO_CUSTOMER",
-               joinColumns = @JoinColumn(name="pos_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="customers_id", referencedColumnName="ID"))
-    private Set<Customer> customers = new HashSet<>();
-*/
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+    
+    
     public Long getId() {
         return id;
     }
@@ -113,22 +106,13 @@ public class Po implements Serializable {
         this.total_sale = total_sale;
     }
 
-    /*public Set<Part> getParts() {
-        return parts;
+    
+    public Customer getCustomer() {
+    	return customer;
     }
-
-    public void setParts(Set<Part> parts) {
-        this.parts = parts;
+    public void setCustomer(Customer customer){
+    	this.customer = customer;
     }
-
-    public Set<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
-    }
-    */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

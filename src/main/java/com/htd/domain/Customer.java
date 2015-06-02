@@ -3,9 +3,14 @@ package com.htd.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Customer.
@@ -27,6 +32,11 @@ public class Customer implements Serializable {
 
     @Column(name = "customer_phone")
     private String customer_phone;
+    
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Po> pos = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -58,6 +68,14 @@ public class Customer implements Serializable {
 
     public void setCustomer_phone(String customer_phone) {
         this.customer_phone = customer_phone;
+    }
+    
+    public Set<Po> getPos() {
+        return pos;
+    }
+
+    public void setPos(Set<Po> pos) {
+        this.pos = pos;
     }
 
     @Override

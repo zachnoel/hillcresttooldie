@@ -51,15 +51,30 @@
                                    ng-model="po.sales_order_number">
                         </div>
                         <div class="form-group">
+                            <label>Customer</label>
+                            <select class="form-control" name="customer" ng-model="po.customer.id" ng-options="customer.id as customer.customer_name for customer in customers">
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label translate="hillcresttooldieApp.po.due_date">Due_date</label>
                             <input type="date" class="form-control" name="due_date"
-                                   ng-model="po.due_date">
+                                   ng-model="po.due_date" required>
+                            
+                            <div ng-show="editForm.due_date.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.due_date.$error.required">This field is required.</p>                              </p>
+                            </div>
 
                         </div>
                         <div class="form-group">
                             <label translate="hillcresttooldieApp.po.status">Status</label>
-                            <input type="text" class="form-control" name="status"
-                                   ng-model="po.status">
+                            <select class="form-control" name="status" ng-model="po.status">
+                            	<option>Ordered</option>
+                            	<option>In Progress</option>
+                            	<option>Complete</option>
+                            </select>
+<!--                             <input type="text" class="form-control" name="status" -->
+<!--                                    ng-model="po.status"> -->
 
                         </div>
                         <div class="form-group">
@@ -117,6 +132,10 @@
 	<div align="right">
 	<button ng-click="clearFilter()">Clear Filter</button>
     </div>
+    
+    <div>
+    <p>Showing {{poLength}} Purchase Orders</p>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -129,6 +148,7 @@
                     <th>Due Date</th>
                     <th>Status</th>
                     <th>Total Sale</th>
+                    <th>Customer</th>
                     <th></th>
                 </tr>
             </thead>
@@ -145,12 +165,13 @@
                     <td>{{po.due_date}}</td>
                     <td>{{po.status}}</td>
                     <td>{{po.total_sale | currency}}</td>
+                    <td>{{po.customer.customer_name}}</td>
                     <td>
-                        <button type="submit"
-                                ui-sref="poDetail({id:po.id})"
-                                class="btn btn-info">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view">View</span>
-                        </button>
+<!--                         <button type="submit" -->
+<!--                                 ui-sref="poDetail({id:po.id})" -->
+<!--                                 class="btn btn-info"> -->
+<!--                             <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view">View</span> -->
+<!--                         </button> -->
                         <button type="submit"
                                 ng-click="update(po.id)"
                                 class="btn btn-primary">
@@ -212,13 +233,13 @@
                 </tr> <!--end of expand section -->
             </tbody>
         </table>
-        <nav>
-            <ul class="pager" ng-model="pagerNav" ng-show="pagerNavShow">
-                <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a></li>
-                <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li>
-                <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li>
-                <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a href="#">&gt;&gt;</a></li>
-            </ul>
-        </nav>
+<!--         <nav> -->
+<!--             <ul class="pager" ng-model="pagerNav" ng-show="pagerNavShow"> -->
+<!--                 <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a></li> -->
+<!--                 <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li> -->
+<!--                 <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li> -->
+<!--                 <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a href="#">&gt;&gt;</a></li> -->
+<!--             </ul> -->
+<!--         </nav> -->
     </div>
 </div>

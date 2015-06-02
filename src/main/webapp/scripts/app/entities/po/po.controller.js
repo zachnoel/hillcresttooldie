@@ -7,13 +7,17 @@ angular.module('hillcresttooldieApp')
         $scope.po_part = [];
         $scope.po_part = {id: null, part_quantity: null};
         $scope.parts = Part.query();
+        $scope.customers = Customer.query();
         $scope.po_part_list = [];
         $scope.page = 1;
         
+        
+        
         $scope.loadAll = function() {
-            Po.query({page: $scope.page, per_page: 20}, function(result, headers) {
+            Po.query({page: $scope.page, per_page: 100000}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.pos = result;
+                $scope.poLength = $scope.pos.length;
             });
         };
         $scope.loadPage = function(page) {
@@ -96,6 +100,7 @@ angular.module('hillcresttooldieApp')
         	PoFilterByDate.query({startDate:startDate, endDate:endDate}, function(result){
         		$scope.pagerNavShow = false;
         		$scope.pos = result;
+        		$scope.poLength = $scope.pos.length;
         	})
         };
         //This clears the date filter applied on Purchase orders and unhides the pager

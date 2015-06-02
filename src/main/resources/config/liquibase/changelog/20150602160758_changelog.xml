@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+   <changeSet author="noelz (generated)" id="1433279282852-1">
+      <addColumn tableName="T_PO">
+         <column name="customer_id" type="bigint"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1433279282852-2">
+      <addForeignKeyConstraint baseColumnNames="customer_id"
+                               baseTableName="T_PO"
+                               constraintName="FK_1pbj0yju5dxx5ikwk0ple28xl"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_CUSTOMER"/>
+   </changeSet>
+</databaseChangeLog>
