@@ -1,12 +1,17 @@
 <div>
 
-    <h2 translate="hillcresttooldieApp.po.home.title">Po</h2>
-
+    <h2 translate="hillcresttooldieApp.po.home.title">Purchase Orders</h2>
+	<div>
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#savePoModal" ng-click="clear()">
         <span class="glyphicon glyphicon-flash"></span> <span translate="hillcresttooldieApp.po.home.createLabel">Create a new Po</span>
-    </button><br><br>
-
-
+    </button>
+    <div align="right">
+	<button class="btn btn-success btn-default" ng-click="generateShopOrders()">
+		<span>Generate Shop Orders</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-retweet"></span>
+	</button>
+	</div>
+	</div>
+	<br>
     <!--File upload
     <div class="uploadForms">
     <form method="POST" enctype="multipart/form-data" action="api/fileupload/po">
@@ -101,24 +106,34 @@
             </div>
         </div>
     </div>
-
+    <div align="right">
+    	<form role="form" name="dateFilterForm" ng-submit="filterPoByDate()">
+    		<label>Show Purchase Orders Between</label> <input type="date" name="dateFilter.startDate" ng-model="dateFilter.startDate" /> 
+    		<label>and</label>
+    		 <input name="dateFilter.endDate" ng-model="dateFilter.endDate" type="date" /> <button ng-click="console.log(startDate)">Filter</button>
+    	</form>
+    </div>
+	<br>
+	<div align="right">
+	<button ng-click="clearFilter()">Clear Filter</button>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th></th>
                     
-                    <th>ID<br><input size='5' type='text' ng-model='search.id'></th>
-                    <th>PO Number<br><input size='5' type='text' ng-model='search.po_number'></th>
-                    <th>Order Number<br><input size='5' type='text' ng-model='search.sales_order_number'></th>
-                    <th>Due Date<br><input size='5' type='text' ng-model='search.due_date'></th>
-                    <th>Status<br><input size='5' type='text' ng-model='search.status'></th>
-                    <th>Total Sale<br><input size='5' type='text' ng-model='search.total_sale'></th>
+                    <th>ID</th>
+                    <th>PO Number</th>
+                    <th>Order Number</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Total Sale</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat-start="po in pos | filter:search">
+                <tr ng-repeat-start="po in pos">
                     <td>
                       <button ng-if="po.expanded" ng-click="po.expanded = false">-</button>
                       <button ng-if="!po.expanded" ng-click="expand(po, po.id)">+</button>
@@ -198,7 +213,7 @@
             </tbody>
         </table>
         <nav>
-            <ul class="pager">
+            <ul class="pager" ng-model="pagerNav" ng-show="pagerNavShow">
                 <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a href="#">&lt;&lt;</a></li>
                 <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a href="#">&lt;</a></li>
                 <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a href="#">&gt;</a></li>

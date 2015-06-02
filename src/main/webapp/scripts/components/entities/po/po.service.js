@@ -15,4 +15,9 @@ angular.module('hillcresttooldieApp')
             },
             'update': { method:'PUT' }
         });
-    });
+    })
+    .factory('PoFilterByDate', function ($resource) {
+	    return $resource('api/filteredPos/:startDate/:endDate', {}, {
+	        'query': { method: 'GET', isArray: true}
+	    });
+	});

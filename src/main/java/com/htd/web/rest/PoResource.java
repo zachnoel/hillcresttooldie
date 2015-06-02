@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -223,6 +225,20 @@ public class PoResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pos", offset, limit);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+    /**
+     * GET  /pos -> get all the pos with start and end date filters.
+     * @throws ParseException 
+     */
+    @RequestMapping(value = "/filteredPos/{startDate}/{endDate}",
+    		method = RequestMethod.GET,
+    		produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Po>> getFilteredPos(@PathVariable String startDate, @PathVariable String endDate) throws ParseException{
+    	log.debug("REST request to get pos between start and end dates");
+    	List<Po> poResults = poRepository.findByFilter(startDate, endDate);
+		return new ResponseEntity<>(poResults, HttpStatus.OK);
+    }
+     
     /**
      * GET  /pos/:id -> get the "id" po.
      */
