@@ -1,0 +1,22 @@
+{
+    "hillcresttooldieApp": {
+        "supplier" : {
+            "home": {
+                "title": "Suppliers",
+                "createLabel": "Créer un nouveau Supplier",
+                "createOrEditLabel": "Créer ou éditer un Supplier"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Supplier {{ id }} ?"
+            },
+            "detail": {
+                "title": "Supplier"
+            },
+            "supplier_name": "Supplier_name",
+            "supplier_address": "Supplier_address",
+            "supplier_phone": "Supplier_phone",
+            "material": "material"
+        }
+    }
+}
+

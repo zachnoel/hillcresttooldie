@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span translate="hillcresttooldieApp.supplier.detail.title">Supplier</span> {{supplier.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.supplier.supplier_name">Supplier_name</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{supplier.supplier_name}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.supplier.supplier_address">Supplier_address</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{supplier.supplier_address}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="hillcresttooldieApp.supplier.supplier_phone">Supplier_phone</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{supplier.supplier_phone}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="supplier"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

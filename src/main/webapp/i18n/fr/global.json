@@ -12,6 +12,9 @@
                 "customer": "Customer",
                 "organization": "Organization",
                 "po_part": "Po_part",
+                "test_supplier": "Test_supplier",
+                "test_material": "Test_material",
+                "supplier": "Supplier",
                 "additionalEntity": "JHipster will add addtional entities"
             },
             "account": {

@@ -70,6 +70,18 @@
                                    ng-model="material.inventory_count">
 
                         </div>
+                        <div class="form-group">
+                            <label>Primary Supplier</label>
+                            <select class="form-control" name="supplier" ng-model="material.supplier.id" ng-options="supplier.id as supplier.supplier_name for supplier in suppliers">
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <label>Secondary Supplier</label>
+                            <select class="form-control" name="supplier2" ng-model="material.supplier2.id" ng-options="supplier.id as supplier.supplier_name for supplier in suppliers">
+                            </select>
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -121,6 +133,8 @@
                     <th translate="hillcresttooldieApp.material.lb_per_sheet">Lb_per_sheet</th>
                     <th translate="hillcresttooldieApp.material.dollar_per_lb">Dollar_per_lb</th>
                     <th translate="hillcresttooldieApp.material.inventory_count">Inventory_count</th>
+                    <th>Supplier</th>
+                    <th>Supplier 2</th>
                     <th></th>
                 </tr>
             </thead>
@@ -133,6 +147,8 @@
                     <td>{{material.lb_per_sheet}}</td>
                     <td>{{material.dollar_per_lb}}</td>
                     <td>{{material.inventory_count}}</td>
+                    <td>{{material.supplier.supplier_name}}</td>
+                    <td>{{material.supplier2.supplier_name}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="materialDetail({id:material.id})"

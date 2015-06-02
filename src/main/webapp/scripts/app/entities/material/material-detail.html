@@ -58,6 +58,25 @@
                         <input type="text" class="input-sm form-control" value="{{material.inventory_count}}" readonly>
                     </td>
                 </tr>
+                
+                <tr>
+                    <td>
+                        <span>Primary Supplier</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.supplier.supplier_name}} Phone:{{material.supplier.supplier_phone}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Secondary Supplier</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{material.supplier2.supplier_name}} Phone:{{material.supplier2.supplier_phone}}" readonly>
+                    </td>
+                </tr>
+                
+                
             </tbody>
         </table>
     </div>

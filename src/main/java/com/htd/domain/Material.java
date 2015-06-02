@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -50,31 +52,40 @@ public class Material implements Serializable {
 
     @Column(name = "inventory_count")
     private Integer inventory_count;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id")
+    private Supplier supplier;
+    
+    @ManyToOne
+    @JoinColumn(name = "supplier_id_2", referencedColumnName = "id")
+    private Supplier supplier2;
+    
+    //get material id
     public Long getId() {
         return id;
     }
-
+    //set material id
     public void setId(Long id) {
         this.id = id;
     }
-
+    //get material_number
     public String getMaterial_number() {
         return material_number;
     }
-
+    //set material_number
     public void setMaterial_number(String material_number) {
         this.material_number = material_number;
     }
-
+    //get Material_thickness
     public BigDecimal getMaterial_thickness() {
         return material_thickness;
     }
-
+    //set material_thickness
     public void setMaterial_thickness(BigDecimal material_thickness) {
         this.material_thickness = material_thickness;
     }
-
+    
     public String getMaterial_size() {
         return material_size;
     }
@@ -105,6 +116,21 @@ public class Material implements Serializable {
 
     public void setInventory_count(Integer inventory_count) {
         this.inventory_count = inventory_count;
+    }
+    
+    
+    
+    public Supplier getSupplier() {
+    	return supplier;
+    }
+    public void setSupplier(Supplier supplier){
+    	this.supplier = supplier;
+    }
+    public Supplier getSupplier2() {
+    	return supplier2;
+    }
+    public void setSupplier2(Supplier supplier2){
+    	this.supplier2 = supplier2;
     }
 
     @Override

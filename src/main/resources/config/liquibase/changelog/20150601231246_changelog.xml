@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+   <changeSet author="noelz (generated)" id="1433218373465-1">
+      <addColumn tableName="T_MATERIAL">
+         <column name="supplier_id" type="bigint"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1433218373465-2">
+      <addForeignKeyConstraint baseColumnNames="supplier_id"
+                               baseTableName="T_MATERIAL"
+                               constraintName="FK_8xq9lnjolcctma84rmj8gc1nm"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_SUPPLIER"/>
+   </changeSet>
+</databaseChangeLog>

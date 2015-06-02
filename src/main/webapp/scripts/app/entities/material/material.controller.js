@@ -1,9 +1,13 @@
 'use strict';
 
 angular.module('hillcresttooldieApp')
-    .controller('MaterialController', function ($scope, Material, ParseLinks) {
+    .controller('MaterialController', function ($scope, Material, Supplier, ParseLinks) {
         $scope.materials = [];
+        $scope.suppliers = Supplier.query();
+        $scope.secondarySuppliers = Supplier.query();
         $scope.page = 1;
+        
+        
 
         
         $scope.loadAll = function() {
@@ -57,7 +61,7 @@ angular.module('hillcresttooldieApp')
         };
 
 
-
+      
 
 
 

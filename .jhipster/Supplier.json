@@ -1,0 +1,55 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "material",
+            "relationshipNameCapitalized": "Material",
+            "relationshipFieldName": "material",
+            "otherEntityName": "material",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "Material"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "supplier_name",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Supplier_name",
+            "fieldNameUnderscored": "supplier_name",
+            "fieldInJavaBeanMethod": "Supplier_name",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "supplier_address",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Supplier_address",
+            "fieldNameUnderscored": "supplier_address",
+            "fieldInJavaBeanMethod": "Supplier_address",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "supplier_phone",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Supplier_phone",
+            "fieldNameUnderscored": "supplier_phone",
+            "fieldInJavaBeanMethod": "Supplier_phone",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOneToMany": true,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150602033255",
+    "pagination": "pager",
+    "validation": true
+}

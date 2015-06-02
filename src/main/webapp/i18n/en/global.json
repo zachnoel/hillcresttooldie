@@ -1,4 +1,3 @@
-
 {
     "global": {
         "title": "Hillcrest Tool and Die",
@@ -13,6 +12,7 @@
                 "customer": "Customer",
                 "organization": "Organization",
                 "po_part": "Po_part",
+                "supplier": "Supplier",
                 "additionalEntity": "add addtional entities"
             },
             "account": {
