@@ -119,7 +119,7 @@ angular.module('hillcresttooldieApp')
         	angular.forEach($scope.pos, function(po){
         		totalPo = totalPo + 1;
         	})
-        	alert('total Puchase Order IDs submitted for shop order generation = ' + totalPo);
+        	alert('Total Puchase Order IDs submitted for shop order generation = ' + totalPo + "\n\n(This is functionality still being added)\n\n When this button is clicked all PO's that are in the results table will have shop orders generated and automatically downloaded in excel format");
         	
         	
         };

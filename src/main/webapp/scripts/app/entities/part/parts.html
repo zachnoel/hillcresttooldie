@@ -128,14 +128,14 @@
                 <tr>
                     <th>ID</th>
                     <th translate="hillcresttooldieApp.part.part_number">Part_number</th>
-                    <th translate="hillcresttooldieApp.part.part_description">Part_description</th>
-                  <!--
-                    <th translate="hillcresttooldieApp.part.plasma_hrs_per_part">Plasma_hrs_per_part</th>
-                    <th translate="hillcresttooldieApp.part.grind_hrs_per_part">Grind_hrs_per_part</th>
-                    <th translate="hillcresttooldieApp.part.mill_hrs_per_part">Mill_hrs_per_part</th>
-                    <th translate="hillcresttooldieApp.part.brakepress_hrs_per_part">Brakepress_hrs_per_part</th>
-                  -->
-                    <th translate="hillcresttooldieApp.part.lb_per_part">Lb_per_part</th>
+
+                  	<th>Plasma<br>hrs/part</th>
+                    <th>Laser<br>hrs/part</th>
+                    <th>Grind<br>hrs/part</th>
+                    <th>Mill<br>hrs/part</th>
+                    <th>Brakepress<br>hrs/part</th>
+                <!--<th translate="hillcresttooldieApp.part.part_description">Part_description</th> -->
+				<!--<th translate="hillcresttooldieApp.part.lb_per_part">Lb_per_part</th> -->
                     <th translate="hillcresttooldieApp.part.inventory_count">Inventory_count</th>
                     <th></th>
                 </tr>
@@ -144,15 +144,13 @@
                 <tr ng-repeat="part in parts">
                     <td><a ui-sref="partDetail({id:part.id})">{{part.id}}</a></td>
                     <td>{{part.part_number}}</td>
-                    <td>{{part.part_description}}</td>
-                <!--
-                    <td>{{part.plasma_hrs_per_part}}</td>
+					<td>{{part.plasma_hrs_per_part}}</td>
                     <td>{{part.grind_hrs_per_part}}</td>
                     <td>{{part.mill_hrs_per_part}}</td>
                     <td>{{part.brakepress_hrs_per_part}}</td>
-                -->
-                    <td>{{part.lb_per_part}}</td>
-                    <td>{{part.inventory_count}}</td>
+                	<td>{{part.inventory_count}}</td>
+                    <!--<td>{{part.lb_per_part}}</td>-->
+                    <!--<td>{{part.part_description}}</td>-->
                     <td>
                         <button type="submit"
                                 ui-sref="partDetail({id:part.id})"
