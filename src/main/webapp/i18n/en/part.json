@@ -15,6 +15,7 @@
             "part_number": "Part Number",
             "part_description": "Part Description",
             "plasma_hrs_per_part": "Plasma Hrs/Part",
+            "laser_hrs_per_part": "Laser Hrs/Part",
             "grind_hrs_per_part": "Grind Hrs/Part",
             "mill_hrs_per_part": "Mill Hrs/Part",
             "brakepress_hrs_per_part": "Brakepress Hrs/Part",

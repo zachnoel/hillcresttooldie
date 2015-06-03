@@ -30,6 +30,9 @@ public class Part implements Serializable {
 
     @Column(name = "plasma_hrs_per_part", precision=12, scale=4)
     private BigDecimal plasma_hrs_per_part;
+    
+    @Column(name = "laser_hrs_per_part", precision=12, scale=4)
+    private BigDecimal laser_hrs_per_part;
 
     @Column(name = "grind_hrs_per_part", precision=12, scale=4)
     private BigDecimal grind_hrs_per_part;
@@ -83,6 +86,14 @@ public class Part implements Serializable {
 
     public void setPlasma_hrs_per_part(BigDecimal plasma_hrs_per_part) {
         this.plasma_hrs_per_part = plasma_hrs_per_part;
+    }
+    
+    public BigDecimal getLaser_hrs_per_part() {
+        return laser_hrs_per_part;
+    }
+
+    public void setLaser_hrs_per_part(BigDecimal laser_hrs_per_part) {
+        this.laser_hrs_per_part = laser_hrs_per_part;
     }
 
     public BigDecimal getGrind_hrs_per_part() {
@@ -161,6 +172,7 @@ public class Part implements Serializable {
                 ", part_number='" + part_number + "'" +
                 ", part_description='" + part_description + "'" +
                 ", plasma_hrs_per_part='" + plasma_hrs_per_part + "'" +
+                ", laser_hrs_per_part='" + laser_hrs_per_part + "'" +
                 ", grind_hrs_per_part='" + grind_hrs_per_part + "'" +
                 ", mill_hrs_per_part='" + mill_hrs_per_part + "'" +
                 ", brakepress_hrs_per_part='" + brakepress_hrs_per_part + "'" +
