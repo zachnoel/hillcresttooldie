@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillcresttooldieApp')
-    .controller('PoController', function ($scope, Po, Part, Po_part, PoParts, PoFilterByDate, Customer, ParseLinks, $filter) {
+    .controller('PoController', function ($scope, $http, Po, Part, Po_part, PoParts, PoFilterByDate, Customer, ParseLinks, $filter) {
         $scope.pos = [];
         $scope.pagerNavShow = true;
         $scope.po_part = [];
@@ -114,17 +114,10 @@ angular.module('hillcresttooldieApp')
         //Generates shop orders for all PO's currently in the model
         $scope.generateShopOrders = function(){
         	
-        	var totalPo = 0;
-        	
         	angular.forEach($scope.pos, function(po){
-        		totalPo = totalPo + 1;
-        	})
-        	alert('Total Puchase Order IDs submitted for shop order generation = ' + totalPo + "\n\n(This is functionality still being added)\n\n When this button is clicked all PO's that are in the results table will have shop orders generated and automatically downloaded in excel format");
+        		$http.put('api/generateShopOrder/' + po.id,{});
+        	});
         	
         	
-        };
-        
-        
-
-
+        };        
 });
