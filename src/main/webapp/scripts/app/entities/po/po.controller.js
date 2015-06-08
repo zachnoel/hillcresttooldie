@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hillcresttooldieApp')
-    .controller('PoController', function ($scope, $http, Po, Part, Po_part, PoParts, PoFilterByDate, Customer, ParseLinks, $filter) {
+    .controller('PoController', function ($scope, $http, $q, Po, Part, Po_part, PoParts, PoFilterByDate, Customer, ParseLinks, $filter) {
         $scope.pos = [];
         $scope.pagerNavShow = true;
         $scope.po_part = [];
@@ -11,7 +11,7 @@ angular.module('hillcresttooldieApp')
         $scope.po_part_list = [];
         $scope.page = 1;
         
-        
+      
         
         $scope.loadAll = function() {
             Po.query({page: $scope.page, per_page: 100000}, function(result, headers) {
@@ -44,17 +44,49 @@ angular.module('hillcresttooldieApp')
         $scope.delete = function (id) {
             Po.get({id: id}, function(result) {
                 $scope.po = result;
-                $('#deletePoConfirmation').modal('show');
+                $('#deletePoPartsConfirmation').modal('show');
             });
         };
+        
+        
 
-        $scope.confirmDelete = function (id) {
-            Po.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deletePoConfirmation').modal('hide');
-                    $scope.clear();
+        $scope.confirmPartsDelete = function (id) {
+        	angular.forEach($scope.pos, function(po){
+        		po.expanded = false;
+        	});
+        	PoParts.query({poId: id}, function(result) {
+        		
+                $scope.po_part_list = result;
+                
+                	angular.forEach($scope.po_part_list, function(po_part_list){
+	            		Po_part.delete({id: po_part_list.id});
+	            	});
+                	$('#deletePoPartsConfirmation').modal('hide');
+                	$('#deletePoConfirmation').modal('show');
+	            });
+        };
+        
+        $scope.confirmPoDelete = function (id) {
+        	Po.delete({id: id},
+    	              function () {
+    	                  $scope.loadAll();
+    	                  $('#deletePoConfirmation').modal('hide');
+    	                 $scope.clear();
+    	     });
+        };
+        
+        function deletePo(id){
+        	alert('deleting now' + id);
+        	
+        }
+        
+        $scope.deletePoPart = function(poPartId, poId){
+        	Po_part.delete({id: poPartId}, function(){
+        		PoParts.query({poId: poId}, function(result) {
+                    $scope.po_part_list = result;
+                    $scope.po_part = {po: {id: poId}};
                 });
+        	});
         };
 
         $scope.clear = function () {

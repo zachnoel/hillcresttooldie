@@ -1,4 +1,5 @@
 <div>
+	
 
     <h2 translate="hillcresttooldieApp.po.home.title">Purchase Orders</h2>
 	<div>
@@ -57,7 +58,7 @@
                         </div>
                         <div class="form-group">
                             <label translate="hillcresttooldieApp.po.due_date">Due_date</label>
-                            <input type="date" class="form-control" name="due_date"
+                            <input type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" class="form-control" name="due_date"
                                    ng-model="po.due_date" required>
                             
                             <div ng-show="editForm.due_date.$invalid">
@@ -97,10 +98,34 @@
         </div>
     </div>
 
+    <div class="modal fade" id="deletePoPartsConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmPartsDelete(po.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>You must first delete all Parts on this PO do you want to delete all parts and then confirm deletion of the PO?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="deletePoConfirmation">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form name="deleteForm" ng-submit="confirmDelete(po.id)">
+                <form name="deleteForm" ng-submit="confirmPoDelete(po.id)">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                                 ng-click="clear()">&times;</button>
@@ -123,17 +148,15 @@
     </div>
     <div align="right">
     	<form role="form" name="dateFilterForm" ng-submit="filterPoByDate()">
-    		<label>Show Purchase Orders Between</label> <input type="date" name="dateFilter.startDate" ng-model="dateFilter.startDate" /> 
+    		<label>Show Purchase Orders Between</label> 
+    		<input type="text" name="dateFilter.startDate" ng-model="dateFilter.startDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" /> 
     		<label>and</label>
-    		 <input name="dateFilter.endDate" ng-model="dateFilter.endDate" type="date" /> <button ng-click="console.log(startDate)">Filter</button>
+    		<input type="text" name="dateFilter.endDate" ng-model="dateFilter.endDate"  data-provide="datepicker" data-date-format="yyyy-mm-dd" /> 
+    		<button>Filter</button>
+    		<button ng-click="clearFilter()">Clear Filter</button>
     	</form>
     </div>
-	<br>
-	<div align="right">
-	<button ng-click="clearFilter()">Clear Filter</button>
-    </div>
-    
-    <div>
+	<div>
     <p>Showing {{poLength}} Purchase Orders</p>
     </div>
     <div class="table-responsive">
@@ -194,17 +217,27 @@
 							<table class='expandedInnerTable'>
 								<thead>
 									<tr>
+										
 										<th>Part Number</th>
 										<th>Part Description</th>
 										<th>Quantity</th>
+										<th></th>
 									</tr>
 								</thead>
 							<tbody>
 							<tr ng-repeat='po_part in po_part_list'>
 								
+								
 								<td>{{po_part.part.part_number}}</td>
 								<td>{{po_part.part.part_description}}</td>
 								<td>{{po_part.part_quantity}}</td>
+								<td>
+								
+								<button type="submit" ng-click="deletePoPart(po_part.id, po.id)" class="btn btn-danger">
+                            			<span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        		</button>
+								
+								</td>
 							</tr>
 							</tbody>
 							
