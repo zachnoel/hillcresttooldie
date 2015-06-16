@@ -122,7 +122,7 @@ public class Po_partResourceTest {
     public void updatePo_part() throws Exception {
         // Initialize the database
         po_partRepository.saveAndFlush(po_part);
-		
+
 		int databaseSizeBeforeUpdate = po_partRepository.findAll().size();
 
         // Update the po_part
@@ -144,7 +144,7 @@ public class Po_partResourceTest {
     public void deletePo_part() throws Exception {
         // Initialize the database
         po_partRepository.saveAndFlush(po_part);
-		
+
 		int databaseSizeBeforeDelete = po_partRepository.findAll().size();
 
         // Get the po_part

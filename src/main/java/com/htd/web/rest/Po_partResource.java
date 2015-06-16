@@ -2,6 +2,7 @@ package com.htd.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.htd.domain.Po_part;
+import com.htd.domain.ShopOrder;
 import com.htd.repository.Po_partRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,6 +111,7 @@ public class Po_partResource {
     @Timed
     public void delete(@PathVariable Long id) {
         log.debug("REST request to delete Po_part : {}", id);
+
         po_partRepository.delete(id);
     }
 }

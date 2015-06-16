@@ -1,9 +1,6 @@
 package com.htd.web.rest;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.net.URI;
@@ -19,6 +16,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import com.htd.domain.ShopOrder;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -46,6 +44,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.htd.domain.Po;
 import com.htd.repository.PoRepository;
 import com.htd.web.rest.util.PaginationUtil;
+import com.htd.domain.JobOrderGenerator;
 //File upload imports
 //Apache POI imports
 /**
@@ -59,29 +58,30 @@ public class PoResource {
     private Map<Integer,Po> poMap = new HashMap<Integer,Po>();
     @Inject
     private PoRepository poRepository;
-   
-    /**
+
+    private JobOrderGenerator jobOrderGenerator;
+    /*
      * Upload PO file for processing.
-     */  
+     */
     @RequestMapping(value="/fileupload/po", method=RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
-    	
+
     	/*if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("The 'name' parameter must not be null or empty");
         }*/
 
-     	
-        try {      	
+
+        try {
             byte[] byteArr = file.getBytes();
-        	
+
             InputStream file2 = new ByteArrayInputStream(byteArr);
-             
-            //Get the workbook instance for XLS file 
+
+            //Get the workbook instance for XLS file
             XSSFWorkbook workbook = new XSSFWorkbook(file2);
- 
+
             //Get first sheet from the workbook
             XSSFSheet sheet = workbook.getSheetAt(0);
-            
+
             for (Iterator<Row> rit = sheet.rowIterator(); rit.hasNext();) {
 
 				Row row = rit.next();
@@ -97,50 +97,50 @@ public class PoResource {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					Long _id = Long.parseLong(cell.getStringCellValue());
-					po.setId(_id);					
+					po.setId(_id);
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					String _poNumber = cell.getStringCellValue();
 					po.setPo_number(_poNumber);
-					
+
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					String _salesOrder = cell.getStringCellValue();
-					
-					po.setSales_order_number(_salesOrder);				
+
+					po.setSales_order_number(_salesOrder);
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_NUMERIC);
-					
+
 					if (DateUtil.isCellDateFormatted(cell))
 					{
 					   SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					   String cellValue = sdf.format(cell.getDateCellValue());
-					
+
 					   //System.out.println(cellValue);
-					
+
 					   //bufferDate is getting mm/dd/yyyy from excel cell
 					   String[] dateSpliter = cellValue.split("/");
 					   int month= Integer.parseInt(dateSpliter[0]);
 					   int day= Integer.parseInt(dateSpliter[1]);
 					   int year= Integer.parseInt(dateSpliter[2]);
-						
+
 					   LocalDate _date = new LocalDate(year,month,day);
-					
-					   po.setDue_date(_date);				
+
+					   po.setDue_date(_date);
 					}
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					String _status = cell.getStringCellValue();
-					
-					po.setStatus(_status);					
+
+					po.setStatus(_status);
 				}
 				if (cit.hasNext()) {
 					cell = cit.next();
@@ -149,25 +149,25 @@ public class PoResource {
 					//converting double to BigDecimal
 					BigDecimal totalSale_bigDecimal = new BigDecimal(_totalSale,MathContext.DECIMAL64);
 					po.setTotal_sale(totalSale_bigDecimal);
-					
+
 				}
-				
+
 				int poNumber = Integer.parseInt(po.getPo_number());
 				//puts items into map and the key is the PO number
 				poMap.put(poNumber, po);
-				
+
 				 poRepository.save(po);
-				
-			}         
+
+			}
             //test to make sure the file is outputting
     		for(Map.Entry<Integer,  Po> entry : poMap.entrySet()){
     			Po it = ( Po) entry.getValue();
-    			
+
     			System.out.println("Key: "+entry.getKey() + " " +"PO Number "+it.getPo_number()+" "+ "Sales Number "+it.getSales_order_number() + " "+
     					" Date "+ it.getDue_date()+" "+it.getStatus()+" Total Sale: "+it.getTotal_sale());
-    		}			
+    		}
 			workbook.close();
-		           
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -227,7 +227,7 @@ public class PoResource {
     }
     /**
      * GET  /pos -> get all the pos with start and end date filters.
-     * @throws ParseException 
+     * @throws ParseException
      */
     @RequestMapping(value = "/filteredPos/{startDate}/{endDate}",
     		method = RequestMethod.GET,
@@ -238,7 +238,7 @@ public class PoResource {
     	List<Po> poResults = poRepository.findByFilter(startDate, endDate);
 		return new ResponseEntity<>(poResults, HttpStatus.OK);
     }
-     
+
     /**
      * GET  /pos/:id -> get the "id" po.
      */
@@ -266,7 +266,7 @@ public class PoResource {
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    
+
     /**
      * DELETE  /pos/:id -> delete the "id" po.
      */
@@ -278,4 +278,31 @@ public class PoResource {
         log.debug("REST request to delete Po : {}", id);
         poRepository.delete(id);
     }
+
+    /**
+     * Generate Shop Orders.
+     */
+    @RequestMapping(value = "/generateShopOrder/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<ShopOrder> generate(@PathVariable Long id) throws URISyntaxException {
+        System.out.println("po id to generate = " + id);
+
+        List<ShopOrder> shopOrders = poRepository.getShopOrder(id);
+
+        for(ShopOrder<?> order: shopOrders);
+        try{
+            jobOrderGenerator = new JobOrderGenerator(shopOrders);
+
+        }catch(Exception ex){
+            System.out.print("Was not able to create job orders");
+
+            return null;
+        }
+
+        File file = jobOrderGenerator.getShopOrderFile();
+
+        return shopOrders;
+
+    }
+
 }

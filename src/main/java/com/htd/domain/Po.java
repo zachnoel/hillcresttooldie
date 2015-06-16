@@ -1,22 +1,29 @@
 package com.htd.domain;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.htd.domain.util.CustomLocalDateSerializer;
-import com.htd.domain.util.ISO8601LocalDateDeserializer;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
-import javax.persistence.*;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.htd.domain.util.CustomLocalDateSerializer;
+import com.htd.domain.util.ISO8601LocalDateDeserializer;
 
 /**
  * A Po.
@@ -27,11 +34,11 @@ import java.util.Objects;
 public class Po implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -56,8 +63,18 @@ public class Po implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
-    
-    
+
+    @OneToMany(mappedBy="po",targetEntity=Po_part.class)
+    private List<Po_part> partList;
+
+    public List<Po_part> getPartList() {
+        return partList;
+    }
+
+    public void setPartList(List<Po_part> partList) {
+        this.partList = partList;
+    }
+
     public Long getId() {
         return id;
     }
@@ -106,12 +123,12 @@ public class Po implements Serializable {
         this.total_sale = total_sale;
     }
 
-    
+
     public Customer getCustomer() {
-    	return customer;
+        return customer;
     }
     public void setCustomer(Customer customer){
-    	this.customer = customer;
+        this.customer = customer;
     }
     @Override
     public boolean equals(Object o) {
@@ -137,12 +154,12 @@ public class Po implements Serializable {
     @Override
     public String toString() {
         return "Po{" +
-                "id=" + id +
-                ", po_number='" + po_number + "'" +
-                ", sales_order_number='" + sales_order_number + "'" +
-                ", due_date='" + due_date + "'" +
-                ", status='" + status + "'" +
-                ", total_sale='" + total_sale + "'" +
-                '}';
+            "id=" + id +
+            ", po_number='" + po_number + "'" +
+            ", sales_order_number='" + sales_order_number + "'" +
+            ", due_date='" + due_date + "'" +
+            ", status='" + status + "'" +
+            ", total_sale='" + total_sale + "'" +
+            '}';
     }
 }

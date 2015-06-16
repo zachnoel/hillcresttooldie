@@ -1,14 +1,25 @@
 package com.htd.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Part.
@@ -30,7 +41,7 @@ public class Part implements Serializable {
 
     @Column(name = "plasma_hrs_per_part", precision=12, scale=4)
     private BigDecimal plasma_hrs_per_part;
-    
+
     @Column(name = "laser_hrs_per_part", precision=12, scale=4)
     private BigDecimal laser_hrs_per_part;
 
@@ -52,9 +63,21 @@ public class Part implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "T_PART_MATERIAL",
-               joinColumns = @JoinColumn(name="parts_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="materials_id", referencedColumnName="ID"))
+        joinColumns = @JoinColumn(name="parts_id", referencedColumnName="ID"),
+        inverseJoinColumns = @JoinColumn(name="materials_id", referencedColumnName="ID"))
     private Set<Material> materials = new HashSet<>();
+
+    @OneToMany(mappedBy="part",targetEntity=Po_part.class)
+    private List<Po_part> partList;
+
+
+    public List<Po_part> getPartList() {
+        return partList;
+    }
+
+    public void setPartList(List<Po_part> partList) {
+        this.partList = partList;
+    }
 
     public Long getId() {
         return id;
@@ -87,7 +110,7 @@ public class Part implements Serializable {
     public void setPlasma_hrs_per_part(BigDecimal plasma_hrs_per_part) {
         this.plasma_hrs_per_part = plasma_hrs_per_part;
     }
-    
+
     public BigDecimal getLaser_hrs_per_part() {
         return laser_hrs_per_part;
     }
@@ -168,16 +191,16 @@ public class Part implements Serializable {
     @Override
     public String toString() {
         return "Part{" +
-                "id=" + id +
-                ", part_number='" + part_number + "'" +
-                ", part_description='" + part_description + "'" +
-                ", plasma_hrs_per_part='" + plasma_hrs_per_part + "'" +
-                ", laser_hrs_per_part='" + laser_hrs_per_part + "'" +
-                ", grind_hrs_per_part='" + grind_hrs_per_part + "'" +
-                ", mill_hrs_per_part='" + mill_hrs_per_part + "'" +
-                ", brakepress_hrs_per_part='" + brakepress_hrs_per_part + "'" +
-                ", lb_per_part='" + lb_per_part + "'" +
-                ", inventory_count='" + inventory_count + "'" +
-                '}';
+            "id=" + id +
+            ", part_number='" + part_number + "'" +
+            ", part_description='" + part_description + "'" +
+            ", plasma_hrs_per_part='" + plasma_hrs_per_part + "'" +
+            ", laser_hrs_per_part='" + laser_hrs_per_part + "'" +
+            ", grind_hrs_per_part='" + grind_hrs_per_part + "'" +
+            ", mill_hrs_per_part='" + mill_hrs_per_part + "'" +
+            ", brakepress_hrs_per_part='" + brakepress_hrs_per_part + "'" +
+            ", lb_per_part='" + lb_per_part + "'" +
+            ", inventory_count='" + inventory_count + "'" +
+            '}';
     }
 }

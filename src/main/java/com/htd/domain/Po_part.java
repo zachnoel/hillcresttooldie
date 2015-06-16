@@ -1,14 +1,22 @@
 package com.htd.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Po_part.
@@ -87,8 +95,8 @@ public class Po_part implements Serializable {
     @Override
     public String toString() {
         return "Po_part{" +
-                "id=" + id +
-                ", part_quantity='" + part_quantity + "'" +
-                '}';
+            "id=" + id +
+            ", part_quantity='" + part_quantity + "'" +
+            '}';
     }
 }
