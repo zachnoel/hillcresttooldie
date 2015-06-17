@@ -15,7 +15,10 @@ import java.util.List;
 
 public class JobOrderGenerator {
 
-    private File file = new File("/Shop-Order.xlsx");
+
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource("Shop-Order.xlsx").getFile());
+
     private int sheetNumber = 0;
 
     public JobOrderGenerator(List<ShopOrder> shopOrder) throws InvalidFormatException, IOException {
