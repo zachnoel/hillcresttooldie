@@ -18,6 +18,7 @@ public class JobOrderGenerator {
 
     private InputStream inputStream = this.getClass().getResourceAsStream("/resources/Shop-Order.xlsx");
 
+
     private int sheetNumber = 0;
 
     public JobOrderGenerator(List<ShopOrder> shopOrder) throws InvalidFormatException, IOException {
