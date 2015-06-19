@@ -17,6 +17,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import com.htd.domain.ShopOrder;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -289,17 +290,22 @@ public class PoResource {
 
         List<ShopOrder> shopOrders = poRepository.getShopOrder(id);
 
-        for(ShopOrder<?> order: shopOrders);
-        try{
-            jobOrderGenerator = new JobOrderGenerator(shopOrders);
+        for(ShopOrder<?> order: shopOrders) {
+            try {
+                jobOrderGenerator = new JobOrderGenerator(shopOrders);
+                System.out.println("Printing PO Number-----" + order.getPo_number());
 
-        }catch(Exception ex){
-            System.out.print("Was not able to create job orders");
+            } catch (IOException ex) {
+                System.out.print("Was not able to create job orders");
 
-            return null;
+                return null;
+            } catch (InvalidFormatException e) {
+
+                System.out.print("Invalid format, unable to create job order");
+
+                return null;
+            }
         }
-
-        File file = jobOrderGenerator.getShopOrderFile();
 
         return shopOrders;
 

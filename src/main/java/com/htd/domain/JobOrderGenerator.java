@@ -11,20 +11,28 @@ import org.joda.time.LocalDate;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class JobOrderGenerator {
 
-
-    ClassLoader classLoader = getClass().getClassLoader();
-    File file = new File(classLoader.getResource("Shop-Order.xlsx").getFile());
+    private InputStream inputStream = this.getClass().getResourceAsStream("/resources/Shop-Order.xlsx");
 
     private int sheetNumber = 0;
 
     public JobOrderGenerator(List<ShopOrder> shopOrder) throws InvalidFormatException, IOException {
 
-        for (ShopOrder shopOrder1 : shopOrder) {
+        if (inputStream == null) System.out.println("Inputstream is null");
 
+        createJobOrder(shopOrder);
+
+    }
+
+    void createJobOrder(List<ShopOrder> shopOrder) throws InvalidFormatException, IOException {
+
+
+        for (ShopOrder shopOrder1 : shopOrder) {
+            System.out.println("Inside createJobOrder " + shopOrder1.getPo_number());
             writeToSpecificCell(2, 1, sheetNumber, shopOrder1.getPo_number()); //Po Number
             writeToSpecificCell(7, 3, sheetNumber, shopOrder1.getPo_number()); //Part Number
             LocalDate date = shopOrder1.getPo_due_date();
@@ -39,19 +47,17 @@ public class JobOrderGenerator {
             sheetNumber++;
 
         }
+
     }
 
-    void writeToSpecificCell(int rowNumber, int cellNumber, int sheetNumber, String value) throws InvalidFormatException, IOException {
 
-        if(file.exists()){
-            System.out.println("Was was found");
-        } else {
-            System.out.println("File was NOT found");
-        }
+    void writeToSpecificCell(int rowNumber, int cellNumber, int sheetNumber, String value) throws InvalidFormatException, IOException {
+        System.out.println("Inside writeToSpecificCell before try statement " + cellNumber + " " + sheetNumber + " " + value);
+
 
         try {
-
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            System.out.println("Inside writeToSpecificCell at the beginning of try statement");
+            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
             XSSFSheet sheet = workbook.getSheetAt(sheetNumber);
 
@@ -63,17 +69,19 @@ public class JobOrderGenerator {
             }
             cell.setCellType(Cell.CELL_TYPE_STRING);
             cell.setCellValue(value);
-
+            System.out.println("Inside writeToSpecificCell at the end of try statement");
             workbook.close();
 
         } catch (IOException e) {
 
             e.printStackTrace();
+
+        } catch (NullPointerException ex) {
+
+            System.out.println("writeToSpecificCell class is returning null ");
+            ex.getStackTrace();
         }
-    }
 
-    public File getShopOrderFile(){
-        return file;
-    }
 
+    }
 }
