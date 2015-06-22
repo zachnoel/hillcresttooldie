@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Date;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -15,8 +15,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import com.htd.domain.ShopOrder;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -45,7 +49,10 @@ import com.codahale.metrics.annotation.Timed;
 import com.htd.domain.Po;
 import com.htd.repository.PoRepository;
 import com.htd.web.rest.util.PaginationUtil;
+import com.htd.web.rest.util.generateTemplate;
 import com.htd.domain.JobOrderGenerator;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
 //File upload imports
 //Apache POI imports
 /**
@@ -279,35 +286,155 @@ public class PoResource {
         log.debug("REST request to delete Po : {}", id);
         poRepository.delete(id);
     }
-
-    /**
-     * Generate Shop Orders.
-     */
-    @RequestMapping(value = "/generateShopOrder/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<ShopOrder> generate(@PathVariable Long id) throws URISyntaxException {
-        System.out.println("po id to generate = " + id);
-
-        List<ShopOrder> shopOrders = poRepository.getShopOrder(id);
-
-        for(ShopOrder<?> order: shopOrders) {
-            try {
-                jobOrderGenerator = new JobOrderGenerator(shopOrders);
-                System.out.println("Printing PO Number-----" + order.getPo_number());
-
-            } catch (IOException ex) {
-                System.out.print("Was not able to create job orders");
-
-                return null;
-            } catch (InvalidFormatException e) {
-
-                System.out.print("Invalid format, unable to create job order");
-
-                return null;
-            }
-        }
-
-        return shopOrders;
+//Drews Code
+//    /**
+//     * Generate Shop Orders.
+//     */
+//    @RequestMapping(value = "/generateShopOrder/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+//    public List<ShopOrder> generate(@PathVariable Long id) throws URISyntaxException {
+//        System.out.println("po id to generate = " + id);
+//
+//        List<ShopOrder> shopOrders = poRepository.getShopOrder(id);
+//
+//        for(ShopOrder<?> order: shopOrders) {
+//            try {
+//                jobOrderGenerator = new JobOrderGenerator(shopOrders);
+//                System.out.println("Printing PO Number-----" + order.getPo_number());
+//
+//            } catch (IOException ex) {
+//                System.out.print("Was not able to create job orders");
+//
+//                return null;
+//            } catch (InvalidFormatException e) {
+//
+//                System.out.print("Invalid format, unable to create job order");
+//
+//                return null;
+//            }
+//        }
+//
+//        return shopOrders;
+//
+//    }
+    
+//Zach's Code
+    @RequestMapping(value = "/generateShopOrder/{id}", method = RequestMethod.GET)
+    public void generateShopOrder(@PathVariable Long id, HttpServletResponse response) throws URISyntaxException {
+    	
+    	//Step 1: JDBC props
+    	 final String DB_URL = "jdbc:mysql://localhost/hillcresttooldie";
+    	 final String USER = "root";
+    	 final String PASS = "";
+    	 java.sql.Connection conn = null;
+		 java.sql.Statement stmt = null;
+		 
+		 try{
+		      //STEP 2: Register JDBC driver
+		      Class.forName("com.mysql.jdbc.Driver");
+		      //STEP 3: Open a connection
+		      System.out.println("Connecting to database...");
+		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		      //STEP 4: Execute a query
+		      System.out.println("Creating statement...");
+		      stmt = conn.createStatement();
+		      String sql;
+		      sql = "SELECT"
+		    		  	+" hillcresttooldie.t_po.id po_id,"
+		    		  	+" hillcresttooldie.t_po.due_date due_date,"
+		    		  	+" hillcresttooldie.t_customer.customer_name customer_name,"
+						+" hillcresttooldie.t_part.id part_id,"
+						+" hillcresttooldie.t_po_part.part_quantity part_quantity,"
+						+" hillcresttooldie.t_part.part_number part_number,"
+						+" hillcresttooldie.t_part.part_description part_description,"
+						+" hillcresttooldie.t_part.plasma_hrs_per_part plasma_hrs,"
+						+" hillcresttooldie.t_part.grind_hrs_per_part grind_hrs,"
+						+" hillcresttooldie.t_part.mill_hrs_per_part mill_hrs,"
+						+" hillcresttooldie.t_part.brakepress_hrs_per_part brakepress_hrs,"
+						+" hillcresttooldie.t_part.laser_hrs_per_part laser_hrs,"
+						+" hillcresttooldie.t_material.material_thickness material_thickness"
+						+" FROM hillcresttooldie.t_po"
+						+" join hillcresttooldie.t_po_part"
+						+" on hillcresttooldie.t_po_part.po_id = hillcresttooldie.t_po.id"
+						+" join hillcresttooldie.t_part"
+						+" on hillcresttooldie.t_part.id = hillcresttooldie.t_po_part.part_id"
+						+" join hillcresttooldie.t_customer"
+						+" on hillcresttooldie.t_po.customer_id = hillcresttooldie.t_customer.id"
+						+" join hillcresttooldie.t_part_material"
+						+" on hillcresttooldie.t_part.id = hillcresttooldie.t_part_material.parts_id"
+						+" join hillcresttooldie.t_material"
+						+" on hillcresttooldie.t_part_material.materials_id = hillcresttooldie.t_material.id"
+						+" where t_po.id = '"+id+"'";
+		      
+		     ResultSet rs = stmt.executeQuery(sql);
+		     
+		     int index = 0;
+		     HSSFWorkbook workbook = new HSSFWorkbook();
+		     String fileName = "shopOrder.xls";
+		     
+		     
+		     
+		     //STEP 5: Extract data from result set
+		      while(rs.next()){
+		    	 int po_id = rs.getInt("po_id");
+		    	 String due_date = rs.getString("due_date");
+		    	 String customer_name = rs.getString("customer_name");
+		         int part_id  = rs.getInt("part_id");
+		         int part_quantity = rs.getInt("part_quantity");
+		         String part_number = rs.getString("part_number");
+		         String part_description = rs.getString("part_description");
+		         BigDecimal plasma_hrs = rs.getBigDecimal("plasma_hrs");
+		         BigDecimal grind_hrs = rs.getBigDecimal("grind_hrs");
+		         BigDecimal mill_hrs = rs.getBigDecimal("mill_hrs");
+		         BigDecimal brakepress_hrs = rs.getBigDecimal("brakepress_hrs");
+		         BigDecimal laser_hrs = rs.getBigDecimal("laser_hrs");
+		         double material_thickness = rs.getDouble("material_thickness");
+		         
+		         
+		         //Create the Sheet
+		         String sheetName = index + "-" + customer_name + "-" + part_number;
+		         HSSFSheet sheet = workbook.createSheet(sheetName);
+		         //Apply Template to the sheet
+		         generateTemplate.applyTemplate(workbook, sheet);
+		         
+		         
+		         sheet.getRow(1).createCell(1).setCellValue(po_id);
+		         sheet.getRow(5).getCell(3).setCellValue(customer_name);
+		         sheet.getRow(5).createCell(8).setCellValue(due_date);
+		         sheet.getRow(6).getCell(3).setCellValue(part_number);
+		         sheet.getRow(6).createCell(8).setCellValue(part_quantity);
+		         sheet.getRow(7).createCell(4).setCellValue(part_description);
+		         sheet.getRow(7).createCell(8).setCellValue(material_thickness);
+		         
+		         
+		         index++;
+		      }
+		      //STEP 6: Clean-up environment
+		      rs.close();
+		      stmt.close();
+		      conn.close();
+		      response.setContentType("application/vnd.ms-excel");
+		      response.setHeader("Content-disposition", "attachment;filename="+fileName);
+		      OutputStream out = response.getOutputStream();
+		      workbook.write(out);
+		      out.flush();
+		   }catch(SQLException se){
+		     se.printStackTrace();
+		   }catch(Exception e){
+		      e.printStackTrace();
+		   }finally{
+		      try{
+		         if(stmt!=null)
+		            stmt.close();
+		      }catch(SQLException se2){
+		      }
+		      try{
+		         if(conn!=null)
+		            conn.close();
+		      }catch(SQLException se){
+		         se.printStackTrace();
+		      }//end finally try
+		   }//end try
 
     }
 

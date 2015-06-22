@@ -7,9 +7,12 @@
         <span class="glyphicon glyphicon-flash"></span> <span translate="hillcresttooldieApp.po.home.createLabel">Create a new Po</span>
     </button>
     <div align="right">
-	<button class="btn btn-success btn-default" ng-click="generateShopOrders()">
-		<span>Generate Shop Orders</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-retweet"></span>
-	</button>
+<!--     <a href='api/generateShopOrder/1'>Test</a>  -->
+<!-- 	<a href='api/generateShopOrder/1'> -->
+<!-- 	<button class="btn btn-success btn-default"> -->
+<!-- 		<span>Generate Shop Orders</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-retweet"></span> -->
+<!-- 	</button> -->
+<!-- 	</a> -->
 	</div>
 	</div>
 	<br>
@@ -195,6 +198,11 @@
 <!--                                 class="btn btn-info"> -->
 <!--                             <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view">View</span> -->
 <!--                         </button> -->
+						<a href='api/generateShopOrder/{{po.id}}'>
+						    <button class="btn btn-success btn-default">
+								<span>Generate Shop Orders</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-retweet"></span>
+							</button>
+						</a>
                         <button type="submit"
                                 ng-click="update(po.id)"
                                 class="btn btn-primary">

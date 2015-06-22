@@ -144,12 +144,13 @@ angular.module('hillcresttooldieApp')
         };
         
         //Generates shop orders for all PO's currently in the model
-        $scope.generateShopOrders = function(){
-        	
-        	angular.forEach($scope.pos, function(po){
-        		$http.put('api/generateShopOrder/' + po.id,{});
-        	});
-        	
-        	
-        };        
+//        $scope.generateShopOrders = function(){
+//        	
+//        	angular.forEach($scope.pos, function(po){
+//        		$http.get('api/generateShopOrder/' + po.id,{});
+//        		$scope.testResult = po;
+//        		console.log($scope.testResult);
+//        	});
+//        	
+//        };        
 });
