@@ -1,4 +1,4 @@
-package com.htd.web.rest.util;
+	package com.htd.web.rest.util;
 
 import java.math.BigDecimal;
 import java.sql.DriverManager;
@@ -31,31 +31,31 @@ public class createJobTicket {
 	      stmt = conn.createStatement();
 	      String sql;
 	      sql = "SELECT"
-	    		  	+" hillcresttooldie.t_po.id po_id,"
-	    		  	+" hillcresttooldie.t_po.due_date due_date,"
-	    		  	+" hillcresttooldie.t_customer.customer_name customer_name,"
-					+" hillcresttooldie.t_part.id part_id,"
-					+" hillcresttooldie.t_po_part.part_quantity part_quantity,"
-					+" hillcresttooldie.t_part.part_number part_number,"
-					+" hillcresttooldie.t_part.part_description part_description,"
-					+" hillcresttooldie.t_part.plasma_hrs_per_part plasma_hrs,"
-					+" hillcresttooldie.t_part.grind_hrs_per_part grind_hrs,"
-					+" hillcresttooldie.t_part.mill_hrs_per_part mill_hrs,"
-					+" hillcresttooldie.t_part.brakepress_hrs_per_part brakepress_hrs,"
-					+" hillcresttooldie.t_part.laser_hrs_per_part laser_hrs,"
-					+" hillcresttooldie.t_material.material_thickness material_thickness"
-					+" FROM hillcresttooldie.t_po"
-					+" join hillcresttooldie.t_po_part"
-					+" on hillcresttooldie.t_po_part.po_id = hillcresttooldie.t_po.id"
-					+" join hillcresttooldie.t_part"
-					+" on hillcresttooldie.t_part.id = hillcresttooldie.t_po_part.part_id"
-					+" join hillcresttooldie.t_customer"
-					+" on hillcresttooldie.t_po.customer_id = hillcresttooldie.t_customer.id"
-					+" join hillcresttooldie.t_part_material"
-					+" on hillcresttooldie.t_part.id = hillcresttooldie.t_part_material.parts_id"
-					+" join hillcresttooldie.t_material"
-					+" on hillcresttooldie.t_part_material.materials_id = hillcresttooldie.t_material.id"
-					+" where t_po.id = '"+id+"'";
+	    		  	+" hillcresttooldie.T_PO.id po_id,"
+	    		  	+" hillcresttooldie.T_PO.DUE_DATE due_date,"
+	    		  	+" hillcresttooldie.T_CUSTOMER.CUSTOMER_NAME customer_name,"
+					+" hillcresttooldie.T_PART.ID part_id,"
+					+" hillcresttooldie.T_PO_PART.PART_QUANTITY part_quantity,"
+					+" hillcresttooldie.T_PART.PART_NUMBER part_number,"
+					+" hillcresttooldie.T_PART.PART_DESCRIPTION part_description,"
+					+" hillcresttooldie.T_PART.PLASMA_HRS_PER_PART plasma_hrs,"
+					+" hillcresttooldie.T_PART.GRIND_HRS_PER_PART grind_hrs,"
+					+" hillcresttooldie.T_PART.MILL_HRS_PER_PART mill_hrs,"
+					+" hillcresttooldie.T_PART.BRAKEPRESS_HRS_PER_PART brakepress_hrs,"
+					+" hillcresttooldie.T_PART.LASER_HRS_PER_PART laser_hrs,"
+					+" hillcresttooldie.T_MATERIAL.MATERIAL_THICKNESS material_thickness"
+					+" FROM hillcresttooldie.T_PO"
+					+" join hillcresttooldie.T_PO_PART"
+					+" on hillcresttooldie.T_PO_PART.PO_ID = hillcresttooldie.T_PO.ID"
+					+" join hillcresttooldie.T_PART"
+					+" on hillcresttooldie.T_PART.ID = hillcresttooldie.T_PO_PART.PART_ID"
+					+" join hillcresttooldie.T_CUSTOMER"
+					+" on hillcresttooldie.T_PO.CUSTOMER_ID = hillcresttooldie.T_CUSTOMER.ID"
+					+" join hillcresttooldie.T_PART_MATERIAL"
+					+" on hillcresttooldie.T_PART.ID = hillcresttooldie.T_PART_MATERIAL.PARTS_ID"
+					+" join hillcresttooldie.T_MATERIAL"
+					+" on hillcresttooldie.T_PART_MATERIAL.materials_id = hillcresttooldie.T_MATERIAL.id"
+					+" where T_PO.id = '"+id+"'";
 	      
 	     ResultSet rs = stmt.executeQuery(sql);
 	     
