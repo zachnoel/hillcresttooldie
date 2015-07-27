@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+   <changeSet author="noelz (generated)" id="1437962693428-1">
+      <createTable tableName="T_CUSTOMER">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" primaryKeyName="T_CUSTOMERPK"/>
+         </column>
+         <column name="customer_address" type="VARCHAR(255)"/>
+         <column name="customer_name" type="VARCHAR(255)"/>
+         <column name="customer_phone" type="VARCHAR(255)"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-2">
+      <createTable tableName="T_MATERIAL">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" primaryKeyName="T_MATERIALPK"/>
+         </column>
+         <column name="dollar_per_lb" type="DECIMAL(12, 4)"/>
+         <column name="inventory_count" type="INT"/>
+         <column name="lb_per_sheet" type="DECIMAL(12, 4)"/>
+         <column name="material_number" type="VARCHAR(255)"/>
+         <column name="material_size" type="VARCHAR(255)"/>
+         <column name="material_thickness" type="DECIMAL(12, 4)"/>
+         <column name="supplier_id" type="BIGINT"/>
+         <column name="supplier_id_2" type="BIGINT"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-3">
+      <createTable tableName="T_PART">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" primaryKeyName="T_PARTPK"/>
+         </column>
+         <column name="brakepress_hrs_per_part" type="DECIMAL(12, 4)"/>
+         <column name="grind_hrs_per_part" type="DECIMAL(12, 4)"/>
+         <column name="inventory_count" type="INT"/>
+         <column name="laser_hrs_per_part" type="DECIMAL(12, 4)"/>
+         <column name="lb_per_part" type="DECIMAL(12, 4)"/>
+         <column name="mill_hrs_per_part" type="DECIMAL(12, 4)"/>
+         <column name="part_description" type="VARCHAR(255)"/>
+         <column name="part_number" type="VARCHAR(255)"/>
+         <column name="plasma_hrs_per_part" type="DECIMAL(12, 4)"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-4">
+      <createTable tableName="T_PART_MATERIAL">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" primaryKeyName="T_PART_MATERIALPK"/>
+         </column>
+         <column name="material_quantity" type="INT"/>
+         <column name="parts_per_material" type="INT"/>
+         <column name="material_id" type="BIGINT"/>
+         <column name="part_id" type="BIGINT"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-5">
+      <createTable tableName="T_PO">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" primaryKeyName="T_POPK"/>
+         </column>
+         <column name="due_date" type="date"/>
+         <column name="po_number" type="VARCHAR(255)"/>
+         <column name="sales_order_number" type="VARCHAR(255)"/>
+         <column name="status" type="VARCHAR(255)"/>
+         <column name="total_sale" type="DECIMAL(10, 2)"/>
+         <column name="customer_id" type="BIGINT"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-6">
+      <createTable tableName="T_PO_PART">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" primaryKeyName="T_PO_PARTPK"/>
+         </column>
+         <column name="part_quantity" type="INT"/>
+         <column name="part_id" type="BIGINT"/>
+         <column name="po_id" type="BIGINT"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-7">
+      <createTable tableName="T_SUPPLIER">
+         <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints primaryKey="true" primaryKeyName="T_SUPPLIERPK"/>
+         </column>
+         <column name="supplier_address" type="VARCHAR(255)"/>
+         <column name="supplier_name" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+         </column>
+         <column name="supplier_phone" type="VARCHAR(255)"/>
+      </createTable>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-8">
+      <addForeignKeyConstraint baseColumnNames="customer_id"
+                               baseTableName="T_PO"
+                               constraintName="FK_1pbj0yju5dxx5ikwk0ple28xl"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_CUSTOMER"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-9">
+      <addForeignKeyConstraint baseColumnNames="part_id"
+                               baseTableName="T_PART_MATERIAL"
+                               constraintName="FK_22uf4jiq24hht3d0t6h348p3"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_PART"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-10">
+      <addForeignKeyConstraint baseColumnNames="supplier_id"
+                               baseTableName="T_MATERIAL"
+                               constraintName="FK_8xq9lnjolcctma84rmj8gc1nm"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_SUPPLIER"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-11">
+      <addForeignKeyConstraint baseColumnNames="po_id"
+                               baseTableName="T_PO_PART"
+                               constraintName="FK_9jxy04pbb65i8614rokoj4wds"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_PO"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-12">
+      <addForeignKeyConstraint baseColumnNames="supplier_id_2"
+                               baseTableName="T_MATERIAL"
+                               constraintName="FK_crkqip1s9jcc9rr0bfic7a4ge"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_SUPPLIER"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-13">
+      <addForeignKeyConstraint baseColumnNames="material_id"
+                               baseTableName="T_PART_MATERIAL"
+                               constraintName="FK_nms5bft4hps055livd7aw1gt9"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_MATERIAL"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437962693428-14">
+      <addForeignKeyConstraint baseColumnNames="part_id"
+                               baseTableName="T_PO_PART"
+                               constraintName="FK_sist9tvo3ubi25tcfiqm1x9jq"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_PART"/>
+   </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+   <changeSet author="noelz (generated)" id="1437961463644-1">
+      <addColumn tableName="T_PART_MATERIAL">
+         <column name="id" type="bigint">
+            <constraints nullable="false"/>
+         </column>
+      </addColumn>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-2">
+      <addColumn tableName="T_PART_MATERIAL">
+         <column name="material_id" type="bigint"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-3">
+      <addColumn tableName="T_PART_MATERIAL">
+         <column name="material_quantity" type="integer"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-4">
+      <addColumn tableName="T_PART_MATERIAL">
+         <column name="part_id" type="bigint"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-5">
+      <addColumn tableName="T_PART_MATERIAL">
+         <column name="parts_per_material" type="integer"/>
+      </addColumn>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-6">
+      <addForeignKeyConstraint baseColumnNames="part_id"
+                               baseTableName="T_PART_MATERIAL"
+                               constraintName="FK_22uf4jiq24hht3d0t6h348p3"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_PART"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-7">
+      <addForeignKeyConstraint baseColumnNames="material_id"
+                               baseTableName="T_PART_MATERIAL"
+                               constraintName="FK_nms5bft4hps055livd7aw1gt9"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="T_MATERIAL"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-8">
+      <dropForeignKeyConstraint baseTableName="t_part_material"
+                                constraintName="fk_material_material_part_id"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-9">
+      <dropForeignKeyConstraint baseTableName="t_part_material"
+                                constraintName="fk_part_material_material_id"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-10">
+      <dropColumn columnName="materials_id" tableName="t_part_material"/>
+   </changeSet>
+   <changeSet author="noelz (generated)" id="1437961463644-11">
+      <dropColumn columnName="parts_id" tableName="t_part_material"/>
+   </changeSet>
+<!--    <changeSet author="noelz (generated)" id="1437961463644-12"> -->
+<!--       <dropPrimaryKey tableName="T_PART_MATERIAL"/> -->
+<!--       <addPrimaryKey columnNames="id" -->
+<!--                      constraintName="T_PART_MATERIALPK" -->
+<!--                      tableName="T_PART_MATERIAL"/> -->
+<!--    </changeSet> -->
+</databaseChangeLog>

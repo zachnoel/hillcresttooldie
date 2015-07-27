@@ -2,19 +2,14 @@ package com.htd.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,7 +24,12 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Part implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -60,15 +60,26 @@ public class Part implements Serializable {
     @Column(name = "inventory_count")
     private Integer inventory_count;
 
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "T_PART_MATERIAL",
-        joinColumns = @JoinColumn(name="parts_id", referencedColumnName="ID"),
-        inverseJoinColumns = @JoinColumn(name="materials_id", referencedColumnName="ID"))
-    private Set<Material> materials = new HashSet<>();
+//    @ManyToMany
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//    @JoinTable(name = "T_PART_MATERIAL",
+//        joinColumns = @JoinColumn(name="parts_id", referencedColumnName="ID"),
+//        inverseJoinColumns = @JoinColumn(name="materials_id", referencedColumnName="ID"))
+//    private Set<Material> materials = new HashSet<>();
 
     @OneToMany(mappedBy="part",targetEntity=Po_part.class)
     private List<Po_part> partList;
+    
+    @OneToMany(mappedBy="part",targetEntity=Part_material.class)
+    private List<Part_material> materialList;
+
+    public List<Part_material> getMaterialList() {
+        return materialList;
+    }
+
+    public void setMaterialList(List<Part_material> materialList) {
+        this.materialList = materialList;
+    }
 
 
     public List<Po_part> getPartList() {
@@ -159,13 +170,6 @@ public class Part implements Serializable {
         this.inventory_count = inventory_count;
     }
 
-    public Set<Material> getMaterials() {
-        return materials;
-    }
-
-    public void setMaterials(Set<Material> materials) {
-        this.materials = materials;
-    }
 
     @Override
     public boolean equals(Object o) {

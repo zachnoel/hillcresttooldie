@@ -87,7 +87,7 @@ public class PartResource {
     @Timed
     public ResponseEntity<Part> get(@PathVariable Long id) {
         log.debug("REST request to get Part : {}", id);
-        return Optional.ofNullable(partRepository.findOneWithEagerRelationships(id))
+        return Optional.ofNullable(partRepository.findOne(id))
             .map(part -> new ResponseEntity<>(
                 part,
                 HttpStatus.OK))

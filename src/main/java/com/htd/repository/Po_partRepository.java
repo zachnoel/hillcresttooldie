@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.htd.domain.Po_part;
-import com.htd.domain.ShopOrder;
+
+
 
 /**
  * Spring Data JPA repository for the Po_part entity.

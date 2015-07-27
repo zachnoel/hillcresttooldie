@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface PartRepository extends JpaRepository<Part,Long> {
 
-    @Query("select part from Part part left join fetch part.materials where part.id =:id")
-    Part findOneWithEagerRelationships(@Param("id") Long id);
+//    @Query("select part from Part part left join fetch part.materials where part.id =:id")
+//    Part findOneWithEagerRelationships(@Param("id") Long id);
 
 }
