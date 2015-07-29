@@ -1,81 +1,111 @@
 package com.htd.domain;
 
-import com.htd.domain.ShopOrder;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.joda.time.LocalDate;
-
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.joda.time.LocalDate;
+
+import com.htd.web.rest.util.GenerateJobOrderTemplate;
+
+@Stateless
 public class JobOrderGenerator {
 
-    private InputStream inputStream = this.getClass().getResourceAsStream("/resources/Shop-Order.xlsx");
-
+    private OutputStream out;
 
     private int sheetNumber = 0;
+    private HSSFWorkbook workbook;
+    private HSSFSheet sheet;
+    private String customerName;
 
-    public JobOrderGenerator(List<ShopOrder> shopOrder) throws InvalidFormatException, IOException {
+    @Inject
+    HttpServletResponse response;
+    @Inject
+    GenerateJobOrderTemplate generateTemplate;
 
-        if (inputStream == null) System.out.println("Inputstream is null");
+    public JobOrderGenerator(List<ShopOrder> shopOrder, HttpServletResponse response)
+        throws InvalidFormatException, IOException {
 
+        this.response = response;
+        createWorkBook();
         createJobOrder(shopOrder);
-
+        createFile();
     }
 
-    void createJobOrder(List<ShopOrder> shopOrder) throws InvalidFormatException, IOException {
+    private void createWorkBook() {
+        workbook = new HSSFWorkbook();
+    }
 
+    private void createSheet(){
 
-        for (ShopOrder shopOrder1 : shopOrder) {
-            System.out.println("Inside createJobOrder " + shopOrder1.getPo_number());
-            writeToSpecificCell(2, 1, sheetNumber, shopOrder1.getPo_number()); //Po Number
-            writeToSpecificCell(7, 3, sheetNumber, shopOrder1.getPo_number()); //Part Number
-            LocalDate date = shopOrder1.getPo_due_date();
+        String sheetName = sheetNumber + 1 + "-" + customerName;
+        sheet = workbook.createSheet(sheetName);
+        generatShopOrderTemplate();
+    }
+
+    private void generatShopOrderTemplate(){
+        generateTemplate = new GenerateJobOrderTemplate();
+        generateTemplate.applyTemplate(workbook, sheet);
+    }
+
+    private void createJobOrder(List<ShopOrder> order) throws InvalidFormatException,
+        IOException {
+
+        //get current date time with Date()
+        Date todaysDate = new Date();
+
+        for(ShopOrder shopOrder: order){
+
+            customerName = shopOrder.getCustomer_name(); //set customerName to name the sheet
+            createSheet();
+
+            writeToSpecificCell(1, 1, sheetNumber, shopOrder.getPo_number()); // Po Number
+            writeToSpecificCell(6, 3, sheetNumber, shopOrder.getPart_number()); // Part Number
+
+            LocalDate date = shopOrder.getPo_due_date();
             String dateToString = date.toString();
-            writeToSpecificCell(1, 2, sheetNumber, dateToString); //Due_Date
-            writeToSpecificCell(7, 5, sheetNumber, Integer.toString(shopOrder1.getPart_quantity())); //Quantity
-            //writeToSpecificCell(1,2,sheetNumber, shopOrder.get); //Material
-            writeToSpecificCell(8, 3, sheetNumber, shopOrder1.getPart_decription()); //Part Description
-            //writeToSpecificCell(1,2,sheetNumber, shopOrder.getCustomer()); //Customer
-            writeToSpecificCell(10, 1, sheetNumber, shopOrder1.getMachine_number()); //Machine
+            writeToSpecificCell(5, 7, sheetNumber, dateToString); // Due_Date
+
+            writeToSpecificCell(2, 1, sheetNumber, todaysDate.toString());//todays date
+            writeToSpecificCell(6, 7, sheetNumber,
+                Integer.toString(shopOrder.getPart_quantity())); // Part Quantity
+            //writeToSpecificCell(1,2,sheetNumber, shopOrder.getMaterial); //Material
+            writeToSpecificCell(7, 3, sheetNumber, shopOrder.getPart_decription()); // Part Description
+            writeToSpecificCell(5,3,sheetNumber, shopOrder.getCustomer_name()); //Customer
+            writeToSpecificCell(10, 1, sheetNumber, shopOrder.getMachine_number()); // Machine
+            writeToSpecificCell(7, 7, sheetNumber, shopOrder.getMaterial_size()); // Material Size
 
             sheetNumber++;
-
         }
 
     }
 
-
-    void writeToSpecificCell(int rowNumber, int cellNumber, int sheetNumber, String value) throws InvalidFormatException, IOException {
-        System.out.println("Inside writeToSpecificCell before try statement " + cellNumber + " " + sheetNumber + " " + value);
-
-
+    public void writeToSpecificCell(int rowNumber, int cellNumber, int sheetNumber,
+                                    String value) throws InvalidFormatException {
+        System.out.println("The value being passed is: "+value);
         try {
-            System.out.println("Inside writeToSpecificCell at the beginning of try statement");
-            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
-            XSSFSheet sheet = workbook.getSheetAt(sheetNumber);
+            sheet = workbook.getSheetAt(sheetNumber);
 
-            XSSFRow row = sheet.getRow(rowNumber);
-            XSSFCell cell = row.createCell(cellNumber);
+            HSSFRow row = sheet.getRow(rowNumber);
+            HSSFCell cell = row.createCell(cellNumber);
 
             if (cell == null) {
                 cell = row.createCell(cellNumber);
             }
             cell.setCellType(Cell.CELL_TYPE_STRING);
             cell.setCellValue(value);
-            System.out.println("Inside writeToSpecificCell at the end of try statement");
-            workbook.close();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
 
         } catch (NullPointerException ex) {
 
@@ -83,6 +113,26 @@ public class JobOrderGenerator {
             ex.getStackTrace();
         }
 
+    }
+
+    private void createFile(){
+
+        // Set Excel File Name
+        String fileName = "JobTicket.xls";
+        // Set HTT
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment;filename="
+            + fileName);
+
+        try {
+            out = response.getOutputStream();
+            workbook.write(out);
+            out.flush();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
 
     }
+
 }

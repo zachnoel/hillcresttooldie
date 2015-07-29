@@ -36,4 +36,40 @@
     <cache name="com.htd.domain.User.persistentTokens"
            timeToLiveSeconds="3600">
     </cache>
+
+    <cache name="com.htd.domain.Part_material"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Part"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Po_part"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Customer"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Supplier"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Po"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Material"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Supplier.materials"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.htd.domain.Customer.pos"
+           timeToLiveSeconds="3600">
+    </cache>
 </ehcache>

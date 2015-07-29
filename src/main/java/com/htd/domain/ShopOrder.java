@@ -2,9 +2,14 @@ package com.htd.domain;
 
 import java.math.BigDecimal;
 
-import org.joda.time.LocalDate;
+import javax.inject.Named;
 
-public class ShopOrder<po_due_date> {
+import org.joda.time.LocalDate;
+import org.springframework.stereotype.Component;
+
+@Named
+//@Component
+public class ShopOrder {
 
     private long po_id;
     private String po_number;
@@ -19,21 +24,26 @@ public class ShopOrder<po_due_date> {
     private BigDecimal mill_hrs;
     private BigDecimal breakpress_hrs;
     private String machine_number;
+    private String customer_name;
+    private String material_number;
+    private String material_size;
+    private int partsPerMaterial;
 
 
     public ShopOrder() {
-
+        System.out.println("In default class");
     }
 
-    public ShopOrder(long po_id, String po_number, LocalDate po_due_date,
+    public ShopOrder(long po_id, String po_number, LocalDate po_due_date, String customer_name,
                      long po_part_id, int part_quantity, long part_id,
                      String part_number, String part_decription, BigDecimal plasma_hrs,
                      BigDecimal grind_hours, BigDecimal mill_hrs,
-                     BigDecimal breakpress_hrs) {
+                     BigDecimal breakpress_hrs, String material_number, String material_size, int partsPerMaterial) {
 
         this.po_id = po_id;
         this.po_number = po_number;
         this.po_due_date = po_due_date;
+        this.customer_name = customer_name;
         this.po_part_id = po_part_id;
         this.part_quantity = part_quantity;
         this.part_id = part_id;
@@ -43,6 +53,9 @@ public class ShopOrder<po_due_date> {
         this.grind_hours = grind_hours;
         this.mill_hrs = mill_hrs;
         this.breakpress_hrs = breakpress_hrs;
+        this.machine_number = material_number;
+        this.material_size = material_size;
+        this.partsPerMaterial = partsPerMaterial;
 
     }
 
@@ -150,15 +163,58 @@ public class ShopOrder<po_due_date> {
         this.machine_number = machine_number;
     }
 
-    @Override
-    public String toString() {
-        return "ShopOrder [po_id=" + po_id + ", po_number=" + po_number
-                + ", po_due_date=" + po_due_date + ", po_part_id=" + po_part_id
-                + ", part_quantity=" + part_quantity + ", part_id=" + part_id
-                + ", part_number=" + part_number + ", part_decription="
-                + part_decription + ", plasma_hrs=" + plasma_hrs
-                + ", gring_hours=" + grind_hours + ", mill_hrs=" + mill_hrs
-                + ", breakpress_hrs=" + breakpress_hrs + "]";
+    public String getCustomer_name() {
+        return customer_name;
     }
 
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getMaterial_number() {
+        return material_number;
+    }
+
+    public void setMaterial_number(String material_number) {
+        this.material_number = material_number;
+    }
+
+    public String getMaterial_size() {
+        return material_size;
+    }
+
+    public void setMaterial_size(String material_size) {
+        this.material_size = material_size;
+    }
+
+    public int getPartsPerMaterial() {
+        return partsPerMaterial;
+    }
+
+    public void setPartsPerMaterial(int partsPerMaterial) {
+        this.partsPerMaterial = partsPerMaterial;
+    }
+
+    @Override
+    public String toString() {
+        return "ShopOrder{" +
+            "po_id=" + po_id +
+            ", po_number='" + po_number + '\'' +
+            ", po_due_date=" + po_due_date +
+            ", po_part_id=" + po_part_id +
+            ", part_quantity=" + part_quantity +
+            ", part_id=" + part_id +
+            ", part_number='" + part_number + '\'' +
+            ", part_decription='" + part_decription + '\'' +
+            ", plasma_hrs=" + plasma_hrs +
+            ", grind_hours=" + grind_hours +
+            ", mill_hrs=" + mill_hrs +
+            ", breakpress_hrs=" + breakpress_hrs +
+            ", machine_number='" + machine_number + '\'' +
+            ", customer_name='" + customer_name + '\'' +
+            ", material_number='" + material_number + '\'' +
+            ", material_size='" + material_size + '\'' +
+            ", partsPerMaterial=" + partsPerMaterial +
+            '}';
+    }
 }
