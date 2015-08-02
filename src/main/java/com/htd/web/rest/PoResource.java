@@ -44,12 +44,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-import com.htd.domain.JobOrderGenerator;
+import com.htd.web.rest.util.JobOrderGenerator;
 import com.htd.domain.Po;
 import com.htd.domain.ShopOrder;
 import com.htd.repository.MaterialRepository;
 import com.htd.repository.PoRepository;
-import com.htd.web.rest.util.CreateJobTicket;
 import com.htd.web.rest.util.PaginationUtil;
 
 //File upload imports
@@ -72,8 +71,6 @@ public class PoResource {
 
     @Inject
     private Environment env;
-
-    private CreateJobTicket jobTicket;
 
     private JobOrderGenerator jobOrderGenerator;
 
@@ -296,10 +293,10 @@ public class PoResource {
         log.debug("REST request to delete Po : {}", id);
         poRepository.delete(id);
     }
-    //Drews Code
-//    /**
-//     * Generate Shop Orders.
-//     */
+
+    /*
+     * Generate Shop Orders.
+     */
     @RequestMapping(value = "/generateJobTicket/{id}", method = RequestMethod.GET)
     public void generateJobTicket(@PathVariable Long id, HttpServletResponse response) throws URISyntaxException {
 
@@ -325,32 +322,5 @@ public class PoResource {
         }
 
     }
-
-//Zach's Code
-/*    @RequestMapping(value = "/generateJobTicket/{id}", method = RequestMethod.GET)
-    public void generateJobTicket(@PathVariable Long id, HttpServletResponse response) throws URISyntaxException {
-
-    	//Set Excel File Name
-    	String fileName = "JobTicket.xls";
-    	//Create workbook
-    	HSSFWorkbook workbook = new HSSFWorkbook();
-    	//Set HTT
-    	response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment;filename="+fileName);
-	    OutputStream out;
-
-	    try {
-			jobTicket = new CreateJobTicket();
-			jobTicket.setEnvironment(env);
-			jobTicket.getWorkbook(workbook, id);
-			out = response.getOutputStream();
-			workbook.write(out);
-		    out.flush();
-		} catch (IOException e) {
-			 e.printStackTrace();
-		}
-
-
-    }*/
 
 }
