@@ -10,7 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.core.env.Environment;
 
 
-public class createJobTicket {
+public class CreateJobTicket {
 	
 		
 	public static HSSFWorkbook getWorkbook(HSSFWorkbook workbook, Long id, Environment env){
